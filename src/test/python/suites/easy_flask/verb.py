@@ -17,7 +17,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEqual(rest.directives[u'rest.Verb'], 'GET')
+        self.assertTrue(rest.hasGET())
 
     def test_should_have_PUT(self):
         rest = Rest()
@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEqual(rest.directives[u'rest.Verb'], 'PUT')
+        self.assertTrue(rest.hasPUT())
 
     def test_should_have_POST(self):
         rest = Rest()
@@ -35,7 +35,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEqual(rest.directives[u'rest.Verb'], 'POST')
+        self.assertTrue(rest.hasPOST())
 
     def test_should_have_DELETE(self):
         rest = Rest()
@@ -44,7 +44,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEqual(rest.directives[u'rest.Verb'], 'DELETE')
+        self.assertTrue(rest.hasDELETE())
 
     def test_should_have_a_Verb(self):
         rest = Rest()
@@ -53,7 +53,8 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEqual(rest.directives[u'rest.Verb'], 'UPLOAD')
+        self.assertTrue(rest.hasVerb(u'UPLOAD'))
+
 
     def test_should_not_have_GET_and_PUT(self):
         rest = Rest()

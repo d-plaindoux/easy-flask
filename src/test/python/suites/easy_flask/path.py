@@ -17,7 +17,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEqual(rest.directives[u'rest.Path'], 'a/path')
+        self.assertEqual(rest.getPath(), 'a/path')
 
     def test_should_not_have_Path_twice(self):
         rest = Rest()
