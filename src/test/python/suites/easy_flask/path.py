@@ -1,5 +1,5 @@
 import unittest
-from easy_flask.rest import Rest
+from easy_flask import rest
 from easy_flask.exceptions import OverloadedPathException
 
 
@@ -11,17 +11,14 @@ class TestCase(unittest.TestCase):
         pass
 
     def test_should_have_a_path(self):
-        rest = Rest()
-
         @rest.Path('a/path')
         def test():
             pass
 
-        self.assertEqual(rest.getPath(), 'a/path')
+        self.assertTrue(rest.hasPath(test))
+        self.assertEqual(rest.getPath(test), 'a/path')
 
     def test_should_not_have_Path_twice(self):
-        rest = Rest()
-
         try:
             @rest.Path("/a/path")
             @rest.Path("/another/path")

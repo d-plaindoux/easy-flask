@@ -1,5 +1,5 @@
 import unittest
-from easy_flask.rest import Rest
+from easy_flask import rest
 from easy_flask.exceptions import OverloadedVerbException
 
 
@@ -10,58 +10,54 @@ class TestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_should_have_GET(self):
-        rest = Rest()
-
-        @rest.GET()
+    def test_should_have_nothing(self):
         def test():
             pass
 
-        self.assertTrue(rest.hasGET())
+        self.assertFalse(rest.hasGET(test))
+        self.assertFalse(rest.hasPUT(test))
+        self.assertFalse(rest.hasPOST(test))
+        self.assertFalse(rest.hasDELETE(test))
+
+    def test_should_have_GET(self):
+        @rest.GET
+        def test():
+            pass
+
+        self.assertTrue(rest.hasGET(test))
 
     def test_should_have_PUT(self):
-        rest = Rest()
-
-        @rest.PUT()
+        @rest.PUT
         def test():
             pass
 
-        self.assertTrue(rest.hasPUT())
+        self.assertTrue(rest.hasPUT(test))
 
     def test_should_have_POST(self):
-        rest = Rest()
-
-        @rest.POST()
+        @rest.POST
         def test():
             pass
 
-        self.assertTrue(rest.hasPOST())
+        self.assertTrue(rest.hasPOST(test))
 
     def test_should_have_DELETE(self):
-        rest = Rest()
-
-        @rest.DELETE()
+        @rest.DELETE
         def test():
             pass
 
-        self.assertTrue(rest.hasDELETE())
+        self.assertTrue(rest.hasDELETE(test))
 
     def test_should_have_a_Verb(self):
-        rest = Rest()
-
         @rest.Verb(u'UPLOAD')
         def test():
             pass
 
-        self.assertTrue(rest.hasVerb(u'UPLOAD'))
-
+        self.assertTrue(rest.hasVerb(test, u'UPLOAD'))
 
     def test_should_not_have_GET_and_PUT(self):
-        rest = Rest()
-
         try:
-            @rest.GET()
-            @rest.PUT()
+            @rest.GET
+            @rest.PUT
             def test_function_to_be_rejected():
                 pass
 
