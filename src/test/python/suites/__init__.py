@@ -1,1 +1,1 @@
-import easy_flask
+import easy_rest

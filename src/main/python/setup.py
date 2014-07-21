@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='easy-flask',
     version='0.1',
-    packages=['easy_flask'],
+    packages=['easy_rest'],
     package_dir={'': 'src/main/python'},
     url='https://github.com/d-plaindoux/easy-flask',
     license='LGPL ',

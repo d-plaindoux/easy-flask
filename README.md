@@ -14,10 +14,10 @@ Work in progress
 
 ```python
 @rest.Path(...)
-@rest.GET()
-@rest.PUT()
-@rest.POST()
-@rest.DELETE()
+@rest.GET
+@rest.PUT
+@rest.POST
+@rest.DELETE
 @rest.Verb(...)
 @rest.Consumes(@rest.type.APPLICATION_JSON)
 @rest.Produces(@rest.type.APPLICATION_JSON)
