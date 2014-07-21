@@ -1,7 +1,7 @@
-easy-flask
-==========
+fluent-rest
+===========
 
-Fluent REST decorators (annotations) dedicated to Flask framework
+Fluent REST decorators (annotations) dedicated to Web framework like Flask ...
 
 Introduction
 ============
@@ -21,7 +21,6 @@ Work in progress
 @rest.Verb(...)
 @rest.Consumes(@rest.type.APPLICATION_JSON)
 @rest.Produces(@rest.type.APPLICATION_JSON)
-@rest.Asynchronous
 ```
 
 License
