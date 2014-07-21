@@ -7,7 +7,7 @@ Introduction
 ============
 
 This library provides REST specification facilities dedicated to
-python frameworks like (Flask)[http://flask.pocoo.org] first.
+python frameworks like [Flask](http://flask.pocoo.org) first.
 
 Work in progress
 ================
