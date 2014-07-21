@@ -1,6 +1,6 @@
 import unittest
-from easy_rest import rest
-from easy_rest.exceptions import OverloadedPathException
+from fluent_rest import rest
+from fluent_rest.exceptions import OverloadedPathException
 
 
 class TestCase(unittest.TestCase):

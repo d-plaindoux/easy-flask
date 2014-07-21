@@ -2,8 +2,8 @@
 TODO
 """
 
-from easy_rest.exceptions import OverloadedPathException
-from easy_rest.exceptions import OverloadedVerbException
+from fluent_rest.exceptions import OverloadedPathException
+from fluent_rest.exceptions import OverloadedVerbException
 
 
 class Specification:

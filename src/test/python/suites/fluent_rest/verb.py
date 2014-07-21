@@ -1,6 +1,6 @@
 import unittest
-from easy_rest import rest
-from easy_rest.exceptions import OverloadedVerbException
+from fluent_rest import rest
+from fluent_rest.exceptions import OverloadedVerbException
 
 
 class TestCase(unittest.TestCase):

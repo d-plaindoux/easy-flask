@@ -1,1 +1,1 @@
-import easy_rest
+import fluent_rest

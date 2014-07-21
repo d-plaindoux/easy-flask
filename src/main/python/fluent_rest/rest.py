@@ -2,7 +2,7 @@
 The module able to decorate code for service specification
 """
 
-from easy_rest.specification import Specification
+from fluent_rest.specification import Specification
 
 
 def hasSpecification(function):

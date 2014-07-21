@@ -1,13 +1,13 @@
 from distutils.core import setup
 
 setup(
-    name='easy-flask',
+    name='fluent-rest',
     version='0.1',
-    packages=['easy_rest'],
+    packages=['fluent_rest'],
     package_dir={'': 'src/main/python'},
-    url='https://github.com/d-plaindoux/easy-flask',
+    url='https://github.com/d-plaindoux/easy-rest',
     license='LGPL ',
     author='dplaindoux',
     author_email='d.plaindoux@fungus.fr',
-    description='Utilities for REST declaration using annotations'
+    description='Utilities for REST declaration using decorators'
 )
