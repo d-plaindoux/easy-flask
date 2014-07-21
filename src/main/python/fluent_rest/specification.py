@@ -1,5 +1,5 @@
 """
-TODO
+The specification
 """
 
 from fluent_rest.exceptions import OverloadedPathException

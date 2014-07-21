@@ -1,5 +1,5 @@
 """
-TODO
+Package initialisation
 """
 
 import rest

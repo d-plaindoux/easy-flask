@@ -1,5 +1,5 @@
 """
-TODO
+Exceptions raised when some operations may fail
 """
 
 

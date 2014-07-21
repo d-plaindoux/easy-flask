@@ -9,7 +9,7 @@ def hasSpecification(function):
     return Specification.exists(function)
 
 
-def specification(function):
+def specs(function):
     return Specification.get(function)
 
 

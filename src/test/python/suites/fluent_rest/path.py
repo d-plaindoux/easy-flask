@@ -1,5 +1,5 @@
 import unittest
-from fluent_rest import rest
+from fluent_rest.rest import *
 from fluent_rest.exceptions import OverloadedPathException
 
 
@@ -11,17 +11,17 @@ class TestCase(unittest.TestCase):
         pass
 
     def test_should_have_a_path(self):
-        @rest.Path('a/path')
+        @Path('a/path')
         def test():
             pass
 
-        self.assertTrue(rest.specification(test).hasPath())
-        self.assertEqual(rest.specification(test).getPath(), 'a/path')
+        self.assertTrue(specs(test).hasPath())
+        self.assertEqual(specs(test).getPath(), 'a/path')
 
     def test_should_not_have_Path_twice(self):
         try:
-            @rest.Path("/a/path")
-            @rest.Path("/another/path")
+            @Path("/a/path")
+            @Path("/another/path")
             def test_function_to_be_rejected():
                 pass
 

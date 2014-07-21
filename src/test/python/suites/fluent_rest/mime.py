@@ -1,5 +1,5 @@
 import unittest
-from fluent_rest import rest
+from fluent_rest.rest import *
 from fluent_rest.exceptions import OverloadedPathException
 
 
@@ -11,27 +11,36 @@ class TestCase(unittest.TestCase):
         pass
 
     def test_should_have_a_consumes(self):
-        @rest.Consumes('application/json')
+        @Consumes('application/json')
         def test():
             pass
 
-        self.assertTrue(
-            rest.specification(test).hasConsumes('application/json')
-        )
+        self.assertTrue(specs(test).hasConsumes('application/json'))
 
-    def test_should_have_a_consumes(self):
-        @rest.Consumes('application/json')
-        @rest.Consumes('application/xml')
+    def test_should_have_two_consumes(self):
+        @Consumes('application/json')
+        @Consumes('application/xml')
         def test():
             pass
 
-        self.assertTrue(
-            rest.specification(test).hasConsumes('application/json')
-        )
+        self.assertTrue(specs(test).hasConsumes('application/json'))
+        self.assertTrue(specs(test).hasConsumes('application/xml'))
 
-        self.assertTrue(
-            rest.specification(test).hasConsumes('application/xml')
-        )
+    def test_should_have_a_produces(self):
+        @Produces('application/json')
+        def test():
+            pass
+
+        self.assertTrue(specs(test).hasProduces('application/json'))
+
+    def test_should_have_two_produces(self):
+        @Produces('application/json')
+        @Produces('application/xml')
+        def test():
+            pass
+
+        self.assertTrue(specs(test).hasProduces('application/json'))
+        self.assertTrue(specs(test).hasProduces('application/xml'))
 
 
 def suite():
