@@ -1,5 +1,5 @@
 """
-The specification
+Module providing specification capabilities using rest decorators.
 """
 
 from fluent_rest.exceptions import OverloadedPathException
@@ -15,6 +15,21 @@ class Specification:
     def __init__(self):
         self.__specs = {}
 
+    def combine(self, specification):
+        if specification.hasPath():
+            if self.hasPath():
+                self.Path("%s/%s" % (specification.getPath(), self.getPath()))
+            else:
+                self.Path(specification.getPath())
+
+        if specification.hasConsumes():
+            [self.Consumes(c) for c in specification.getConsumes()]
+
+        if specification.hasProduces():
+            [self.Produces(c) for c in specification.getProduces()]
+
+        return self
+
     # ------------------------------------------------------------------------
     # Private behaviors
     # ------------------------------------------------------------------------
@@ -25,6 +40,9 @@ class Specification:
     __PRODUCES = u'rest@Produces'
 
     def __define(self, key, value, setup):
+        """
+        Register single specification
+        """
         current = self.__specs[key] if key in self.__specs else None
 
         self.__specs[key] = setup(value, current=current)
@@ -33,12 +51,18 @@ class Specification:
 
     @staticmethod
     def __filterByType(aType):
+        """
+        Determine the right filter selection depending on the input type
+        """
         if aType is list:
             return lambda value, current: value in current
         else:
             return lambda value, current: value == current
 
     def __has(self, key, value):
+        """
+        Checker is a given key exists and the corresponding value is valid
+        """
         if key in self.__specs:
             current = self.__specs[key]
             return self.__filterByType(type(current))(value, current)
@@ -47,6 +71,11 @@ class Specification:
 
     @staticmethod
     def __errorIfDefine(exn):
+        """
+        Method validating a value iff it does exist yet. Prohibits
+        redefinition
+        """
+
         def callback(value, current=None):
             if current is None:
                 return value
@@ -57,6 +86,9 @@ class Specification:
 
     @staticmethod
     def __stackValues(value, current=None):
+        """
+        Method appending a value to a given list provided by current.
+        """
         newCurrent = [] if current is None else list(current)
 
         if value not in newCurrent:
@@ -69,13 +101,23 @@ class Specification:
     # ------------------------------------------------------------------------
 
     def Path(self, path):
+        """
+        Define the rest URI as a Path. This path can contain typed variable
+        definition. For this purpose the FLASK representation path is chosen.
+        """
         return self.__define(self.__PATH, path,
                              self.__errorIfDefine(OverloadedPathException))
 
     def hasPath(self):
+        """
+        Check is a Path has been setup
+        """
         return Specification.__PATH in self.__specs
 
     def getPath(self):
+        """
+        Returns the setup Path or None
+        """
         if self.hasPath():
             return self.__specs[Specification.__PATH]
         else:
@@ -86,10 +128,31 @@ class Specification:
     # ------------------------------------------------------------------------
 
     def Verb(self, name):
+        """
+        Define a verb like 'GET', 'PUT', 'POST', 'DELETE' and ...
+        """
         return self.__define(self.__VERB, name,
                              self.__errorIfDefine(OverloadedVerbException))
 
-    def hasVerb(self, verb):
+    def hasVerb(self):
+        """
+        TODO
+        """
+        return Specification.__VERB in self.__specs
+
+    def getVerb(self):
+        """
+        TODO
+        """
+        if self.hasVerb():
+            return self.__specs[Specification.__VERB]
+        else:
+            return None
+
+    def hasGivenVerb(self, verb):
+        """
+        TODO
+        """
         return self.__has(Specification.__VERB, verb)
 
     # ------------------------------------------------------------------------
@@ -97,9 +160,30 @@ class Specification:
     # ------------------------------------------------------------------------
 
     def Consumes(self, mime):
+        """
+        TODO
+        """
         return self.__define(self.__CONSUMES, mime, self.__stackValues)
 
-    def hasConsumes(self, mime):
+    def hasConsumes(self):
+        """
+        TODO
+        """
+        return Specification.__CONSUMES in self.__specs
+
+    def getConsumes(self):
+        """
+        TODO
+        """
+        if self.hasConsumes():
+            return self.__specs[Specification.__CONSUMES]
+        else:
+            return None
+
+    def hasGivenConsume(self, mime):
+        """
+        TODO
+        """
         return self.__has(self.__CONSUMES, mime)
 
     # ------------------------------------------------------------------------
@@ -107,9 +191,30 @@ class Specification:
     # ------------------------------------------------------------------------
 
     def Produces(self, mime):
+        """
+        TODO
+        """
         return self.__define(self.__PRODUCES, mime, self.__stackValues)
 
-    def hasProduces(self, mime):
+    def hasProduces(self):
+        """
+        TODO
+        """
+        return Specification.__PRODUCES in self.__specs
+
+    def getProduces(self):
+        """
+        TODO
+        """
+        if self.hasProduces():
+            return self.__specs[Specification.__PRODUCES]
+        else:
+            return None
+
+    def hasGivenProduce(self, mime):
+        """
+        TODO
+        """
         return self.__has(self.__PRODUCES, mime)
 
     # ------------------------------------------------------------------------
@@ -118,16 +223,26 @@ class Specification:
 
     @staticmethod
     def exists(function):
+        """
+        TODO
+        """
         return "__rest__" in function.__dict__
 
     @staticmethod
     def get(function):
+        """
+        TODO
+        """
         if "__rest__" not in function.__dict__:
             function.__dict__["__rest__"] = Specification()
         return function.__dict__["__rest__"]
 
     @staticmethod
     def getAndDefine(continuation):
+        """
+        TODO
+        """
+
         def decorate(function):
             continuation(Specification.get(function))
             return function

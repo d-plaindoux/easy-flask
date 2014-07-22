@@ -11,3 +11,10 @@ class OverloadedVerbException(Exception):
 class OverloadedPathException(Exception):
     def __init__(self, *args, **kwargs):
         super(OverloadedPathException, self).__init__(*args, **kwargs)
+
+
+class NotASuitableDefinitionException(object):
+    def __init__(self, *args, **kwargs):
+        super(NotASuitableDefinitionException, self).__init__(*args, **kwargs)
+
+

@@ -5,15 +5,11 @@ The module able to decorate code for service specification
 from fluent_rest.specification import Specification
 
 
-def hasSpecification(function):
-    return Specification.exists(function)
-
-
 def specs(function):
     return Specification.get(function)
 
 
-def specExists(function):
+def specsExists(function):
     return Specification.exists(function)
 
 

@@ -16,6 +16,9 @@ python web frameworks.
 `TODO` Example
 ==============
 
+In this example we show how decorators can be used in order to specify a REST
+service dedicated to `TODO` data.
+
 ```python
 from fluent_rest.rest import *
 
@@ -27,7 +30,7 @@ class TODO:
         pass
 
     @GET
-    def listTodo(self):
+    def list(self):
         # returns todo
         ...
 

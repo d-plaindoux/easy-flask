@@ -15,7 +15,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specs(test).hasConsumes('application/json'))
+        self.assertTrue(specs(test).hasGivenConsume('application/json'))
 
     def test_should_have_two_consumes(self):
         @Consumes('application/json')
@@ -23,15 +23,15 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specs(test).hasConsumes('application/json'))
-        self.assertTrue(specs(test).hasConsumes('application/xml'))
+        self.assertTrue(specs(test).hasGivenConsume('application/json'))
+        self.assertTrue(specs(test).hasGivenConsume('application/xml'))
 
     def test_should_have_a_produces(self):
         @Produces('application/json')
         def test():
             pass
 
-        self.assertTrue(specs(test).hasProduces('application/json'))
+        self.assertTrue(specs(test).hasGivenProduce('application/json'))
 
     def test_should_have_two_produces(self):
         @Produces('application/json')
@@ -39,8 +39,8 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specs(test).hasProduces('application/json'))
-        self.assertTrue(specs(test).hasProduces('application/xml'))
+        self.assertTrue(specs(test).hasGivenProduce('application/json'))
+        self.assertTrue(specs(test).hasGivenProduce('application/xml'))
 
 
 def suite():
