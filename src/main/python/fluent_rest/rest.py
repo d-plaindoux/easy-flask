@@ -13,6 +13,10 @@ def specs(function):
     return Specification.get(function)
 
 
+def specExists(function):
+    return Specification.exists(function)
+
+
 def Path(path):
     return Specification.getAndDefine(lambda s: s.Path(path))
 

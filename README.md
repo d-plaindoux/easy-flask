@@ -13,14 +13,48 @@ Work in progress
 ================
 
 ```python
-@rest.Path(...)
-@rest.GET
-@rest.PUT
-@rest.POST
-@rest.DELETE
-@rest.Verb(...)
-@rest.Consumes(@rest.type.APPLICATION_JSON)
-@rest.Produces(@rest.type.APPLICATION_JSON)
+from fluent_rest.rest import *
+
+class TODO:
+    def __init__(self):
+        pass
+
+    @Path("todo")
+    @GET
+    @Produces("application/json")
+    def listTodo(self):
+        # returns todo
+        ...
+
+    @Path("todo/<id>")
+    @GET
+    @Produces("application/json")
+    def get(self, id):
+        # returns identified todo
+        ...
+
+    @Path("todo")
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    def create(self, data):
+        # creates a now todo using `data`
+        ...
+
+    @Path("todo/<id>")
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    def modify(self, id, data):
+        # modifies an identified todo using `data`
+        ...
+
+    @Path("todo/<id>")
+    @DELETE
+    @Consumes("application/json")
+    def remove(self, id):
+        # deletes an identified todo
+        ...
 ```
 
 License
