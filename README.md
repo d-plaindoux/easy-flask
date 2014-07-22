@@ -2,10 +2,10 @@ fluent-rest
 ===========
 
 Fluent REST decorators (annotations) dedicated to Web framework like:
-. [Flask](http://flask.pocoo.org)
-. [Django](http://www.django-rest-framework.org)
-. [Pecan](http://www.pecanpy.org) and
-. [Falcon](http://falconframework.org).
+* [Flask](http://flask.pocoo.org)
+* [Django](http://www.django-rest-framework.org)
+* [Pecan](http://www.pecanpy.org) and
+* [Falcon](http://falconframework.org).
 
 Introduction
 ============
