@@ -19,38 +19,33 @@ class TODO:
     def __init__(self):
         pass
 
-    @Path("todo")
-    @GET
+    @GET @Path("todo")
     @Produces("application/json")
     def listTodo(self):
         # returns todo
         ...
 
-    @Path("todo/<id>")
-    @GET
+    @GET @Path("todo/<id>")
     @Produces("application/json")
     def get(self, id):
         # returns identified todo
         ...
 
-    @Path("todo")
-    @POST
+    @POST @Path("todo")
     @Consumes("application/json")
     @Produces("application/json")
     def create(self, data):
         # creates a now todo using `data`
         ...
 
-    @Path("todo/<id>")
-    @PUT
+    @PUT @Path("todo/<id>")
     @Consumes("application/json")
     @Produces("application/json")
     def modify(self, id, data):
         # modifies an identified todo using `data`
         ...
 
-    @Path("todo/<id>")
-    @DELETE
+    @DELETE @Path("todo/<id>")
     @Consumes("application/json")
     def remove(self, id):
         # deletes an identified todo
