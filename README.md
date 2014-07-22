@@ -13,44 +13,40 @@ Introduction
 This library provides REST specification facilities dedicated to
 python web frameworks.
 
-Work in progress
-================
+`TODO` Example
+==============
 
 ```python
 from fluent_rest.rest import *
 
+@Path("todo")
+@Consumes("application/json")
+@Produces("application/json")
 class TODO:
     def __init__(self):
         pass
 
-    @GET @Path("todo")
-    @Produces("application/json")
+    @GET
     def listTodo(self):
         # returns todo
         ...
 
-    @GET @Path("todo/<id>")
-    @Produces("application/json")
+    @GET @Path("<id>")
     def get(self, id):
         # returns identified todo
         ...
 
-    @POST @Path("todo")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @POST
     def create(self, data):
         # creates a now todo using `data`
         ...
 
-    @PUT @Path("todo/<id>")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @PUT @Path("<id>")
     def modify(self, id, data):
         # modifies an identified todo using `data`
         ...
 
-    @DELETE @Path("todo/<id>")
-    @Consumes("application/json")
+    @DELETE @Path("<id>")
     def remove(self, id):
         # deletes an identified todo
         ...
