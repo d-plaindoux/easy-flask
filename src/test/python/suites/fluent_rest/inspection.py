@@ -48,6 +48,20 @@ class TestCase(unittest.TestCase):
         self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
         self.assertEquals(specs(Test.test).getPath(), 'foo/bar')
 
+    def test_should_inspect_specified_class_adding_path(self):
+        @Path('foo')
+        class Test:
+            def __init__(self):
+                pass
+
+            @GET
+            @Consumes('application/json')
+            def test(self):
+                pass
+
+        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(specs(Test.test).getPath(), 'foo')
+
     def test_should_inspect_specified_class_adding_consumes(self):
         @Path('foo')
         @Consumes('application/json')
@@ -71,12 +85,12 @@ class TestCase(unittest.TestCase):
                 pass
 
             @GET
-            @Path('bar')
             def test(self):
                 pass
 
         self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
         self.assertTrue(specs(Test.test).hasGivenProduces('application/json'))
+
 
 def suite():
     aSuite = unittest.TestSuite()
