@@ -13,7 +13,7 @@ class TestCase(unittest.TestCase):
 
     def test_should_inspect_function(self):
         @GET
-        @Path("bar")
+        @Path('bar')
         @Consumes('application/json')
         def test():
             pass
@@ -26,27 +26,57 @@ class TestCase(unittest.TestCase):
                 pass
 
             @GET
-            @Path("bar")
+            @Path('bar')
             @Consumes('application/json')
             def test(self):
                 pass
 
         self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
 
-    def test_should_inspect_specificied_class(self):
-        @Path("foo")
+    def test_should_inspect_specified_class_extending_path(self):
+        @Path('foo')
         class Test:
             def __init__(self):
                 pass
 
             @GET
-            @Path("bar")
+            @Path('bar')
             @Consumes('application/json')
             def test(self):
                 pass
 
         self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
-        self.assertEquals(specs(Test.test).getPath(), "foo/bar")
+        self.assertEquals(specs(Test.test).getPath(), 'foo/bar')
+
+    def test_should_inspect_specified_class_adding_consumes(self):
+        @Path('foo')
+        @Consumes('application/json')
+        class Test:
+            def __init__(self):
+                pass
+
+            @GET
+            @Path('bar')
+            def test(self):
+                pass
+
+        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertTrue(specs(Test.test).hasGivenConsumes('application/json'))
+
+    def test_should_inspect_specified_adding_produces(self):
+        @Path('foo')
+        @Produces('application/json')
+        class Test:
+            def __init__(self):
+                pass
+
+            @GET
+            @Path('bar')
+            def test(self):
+                pass
+
+        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertTrue(specs(Test.test).hasGivenProduces('application/json'))
 
 def suite():
     aSuite = unittest.TestSuite()

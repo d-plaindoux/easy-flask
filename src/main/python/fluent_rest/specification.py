@@ -18,7 +18,8 @@ class Specification:
     def combine(self, specification):
         if specification.hasPath():
             if self.hasPath():
-                self.Path("%s/%s" % (specification.getPath(), self.getPath()))
+                path = self.__deletePath()
+                self.Path("%s/%s" % (specification.getPath(), path))
             else:
                 self.Path(specification.getPath())
 
@@ -123,6 +124,17 @@ class Specification:
         else:
             return None
 
+    def __deletePath(self):
+        """
+        Returns the setup Path or None
+        """
+        if self.hasPath():
+            path = self.__specs[Specification.__PATH]
+            del self.__specs[Specification.__PATH]
+            return path
+        else:
+            return None
+
     # ------------------------------------------------------------------------
     # Verb management
     # ------------------------------------------------------------------------
@@ -180,7 +192,7 @@ class Specification:
         else:
             return None
 
-    def hasGivenConsume(self, mime):
+    def hasGivenConsumes(self, mime):
         """
         TODO
         """
@@ -211,7 +223,7 @@ class Specification:
         else:
             return None
 
-    def hasGivenProduce(self, mime):
+    def hasGivenProduces(self, mime):
         """
         TODO
         """
