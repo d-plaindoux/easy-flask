@@ -34,7 +34,7 @@ class TODO:
         # returns todo
         ...
 
-    @GET @Path("{id}")
+    @GET @Path("{id:uuid}")
     def get(self, id):
         # returns identified todo
         ...
@@ -44,12 +44,12 @@ class TODO:
         # creates a now todo using `data`
         ...
 
-    @PUT @Path("{id}")
+    @PUT @Path("{id:uuid}")
     def modify(self, id, data):
         # modifies an identified todo using `data`
         ...
 
-    @DELETE @Path("{id}")
+    @DELETE @Path("{id:uuid}")
     def remove(self, id):
         # deletes an identified todo
         ...
