@@ -1,4 +1,6 @@
 import unittest
+
+from uuid import uuid1
 from fluent_rest.path import *
 
 
@@ -44,34 +46,6 @@ class TestCase(unittest.TestCase):
     def test_should_parse_a_complex_path(self):
         self.assertEquals(Path.parse('file/{myid:string}/content'),
                           Path(['file', Var('myid', 'string'), 'content']))
-
-    def test_should_match_a_simple_path(self):
-        self.assertIsNotNone(Path.parse('bar/foo').accept('bar/foo'))
-
-    def test_should_match_a_path_with_a_variable(self):
-        variables = Path.parse('bar/{foo}').accept('bar/tutu')
-        self.assertIsNotNone(variables)
-        self.assertEquals(variables['foo'], 'tutu')
-
-    def test_should_match_a_path_with_an_int_variable(self):
-        variables = Path.parse('bar/{foo:int}').accept('bar/123')
-        self.assertIsNotNone(variables)
-        self.assertEquals(variables['foo'], '123')
-
-    def test_should_not_match_a_path_with_an_int_variable(self):
-        variables = Path.parse('bar/{foo:int}').accept('bar/aaa')
-        self.assertIsNone(variables)
-
-    def test_should_not_match_a_path_with_a_path_variable(self):
-        variables = Path.parse('bar/{foo:path}/c').accept('bar/a/b/c')
-
-        self.assertIsNotNone(variables)
-        self.assertEquals(variables['foo'], 'a/b')
-
-    def test_should_not_match_a_path_with_special_characters(self):
-        variables = Path.parse('bar/$[a-A]').accept('bar/$[a-A]')
-
-        self.assertIsNotNone(variables)
 
 
 def suite():

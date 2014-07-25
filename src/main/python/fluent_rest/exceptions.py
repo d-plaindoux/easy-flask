@@ -8,6 +8,11 @@ class TypeUndefinedException(Exception):
         super(TypeUndefinedException, self).__init__(*args, **kwargs)
 
 
+class VariableUndefinedException(Exception):
+    def __init__(self, *args, **kwargs):
+        super(VariableUndefinedException, self).__init__(*args, **kwargs)
+
+
 class OverloadedVerbException(Exception):
     def __init__(self, *args, **kwargs):
         super(OverloadedVerbException, self).__init__(*args, **kwargs)

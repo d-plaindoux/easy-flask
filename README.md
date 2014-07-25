@@ -55,6 +55,24 @@ class TODO:
         ...
 ```
 
+Decorators
+==========
+
+The fluent-rest library provides a set of decorators applied at the
+class or at the method level. Decorators at the class level define
+specification which are general like the path and available encoders and
+decoders. At the method level verbs are required and additional path can
+also be specified completing the class level path.
+
+Path decorator
+--------------
+
+Codec decorators
+----------------
+
+Verb decorators
+---------------
+
 License
 =======
 

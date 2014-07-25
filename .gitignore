@@ -10,6 +10,7 @@ venv
 *.iml
 *.ipr
 .idea
+.venv
 *.pyc
 
 

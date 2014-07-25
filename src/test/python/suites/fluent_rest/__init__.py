@@ -1,5 +1,5 @@
-import path
+import path_parse
+import path_match
 import verb
-import path
 import mime
 import inspection
