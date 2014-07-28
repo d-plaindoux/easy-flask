@@ -64,8 +64,24 @@ specification which are general like the path and available encoders and
 decoders. At the method level verbs are required and additional path can
 also be specified completing the class level path.
 
-Path decorator
---------------
+Path decorator `@Path(path)`
+----------------------------
+
+A path decorator defines the path associated to a given REST service. A path
+corresponds to an URI to which a resource respond. Such path can be a simple
+ URI or a template URI. A template URI defines typed variables bound
+at the runtime.
+
+### Syntax
+
+```
+path = '/'? item ('/' item)* '/'?
+
+item = '{' IDENT (':' type) '}'
+     | (CHAR - {'/','{'})+
+
+type = 'int' | 'float' | 'string' | 'path' | 'uuid'
+```
 
 Codec decorators
 ----------------
