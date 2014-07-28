@@ -7,8 +7,8 @@ from inspect import isfunction
 from inspect import isclass
 from inspect import ismethod
 
-from fluent_rest.rest import specs
-from fluent_rest.rest import specsExists
+from fluent_rest.spec.rest import specs
+from fluent_rest.spec.rest import specsExists
 from fluent_rest.exceptions import NotASuitableDefinitionException
 
 

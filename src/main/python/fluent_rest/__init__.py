@@ -2,5 +2,5 @@
 Package initialisation
 """
 
-import rest
+import spec
 import exceptions

@@ -1,5 +1,5 @@
 import unittest
-from fluent_rest.rest import *
+from fluent_rest.spec.rest import *
 from fluent_rest.exceptions import OverloadedVerbException
 
 

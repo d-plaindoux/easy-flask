@@ -1,7 +1,6 @@
 import unittest
-from fluent_rest.rest import *
-from fluent_rest.inspection import inspect
-from fluent_rest.exceptions import OverloadedPathException
+from fluent_rest.spec.rest import *
+from fluent_rest.spec.inspection import inspect
 
 
 class TestCase(unittest.TestCase):

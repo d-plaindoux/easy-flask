@@ -1,7 +1,6 @@
 import unittest
 
-from uuid import uuid1
-from fluent_rest.path import *
+from fluent_rest.spec.path import *
 
 
 class TestCase(unittest.TestCase):

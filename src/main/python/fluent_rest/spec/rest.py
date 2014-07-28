@@ -2,7 +2,7 @@
 The module able to decorate code for service specification
 """
 
-from fluent_rest.specification import Specification
+from fluent_rest.spec.specification import Specification
 
 
 def specs(function):
