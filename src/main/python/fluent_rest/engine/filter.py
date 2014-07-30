@@ -1,5 +1,23 @@
+import inspect
 from fluent_rest.spec import rest
 from fluent_rest.spec.path import Path
+
+
+class SpecificationInstance:
+    def __init__(self, specification, variables):
+        self.specification = specification
+        self.variables = variables
+
+    def execute(self, data):
+        parameters = {}
+
+        for name in inspect.getargspec(self.specification)[0]:
+            if name == 'data':
+                parameters.data = data
+            else:
+                parameters[name] = self.variables(name)
+
+        return self.specification(**parameters)
 
 
 class SpecificationFilter:
@@ -28,6 +46,11 @@ class SpecificationFilter:
         if spec.hasGivenProduces(request.produces()) is False:
             return None
 
-        return Path(spec.getPath()).parse(request.path())
+        env = Path.parse(spec.getPath()).accept(request.path())
+
+        if env:
+            return SpecificationInstance(self.specification, env)
+        else:
+            return None
 
 
