@@ -53,6 +53,21 @@ class TODO:
     def remove(self, id):
         # deletes an identified todo
         ...
+
+if __name__ == '__main__':
+    from werkzeug import serving
+    from werkzeug import wrappers
+    from fluent_rest.bridge import WerkzeugBridge
+
+    bridge = WerkzeugBridge()
+
+    bridge.install(TODO())
+
+    bridge.bind(
+        lambda a: serving.run_simple('localhost',
+                                     4000,
+                                     wrappers.Request.application(a))
+    )
 ```
 
 Decorators
