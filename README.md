@@ -53,21 +53,26 @@ class TODO:
     def remove(self, id):
         # deletes an identified todo
         ...
+```
 
-if __name__ == '__main__':
-    from werkzeug import serving
-    from werkzeug import wrappers
-    from fluent_rest.bridge import WerkzeugBridge
+Then creating a WSGI server instance based on
+[Werkzeug](http://werkzeug.pocoo.org) utility library can be easily done using
+provided bridge.
 
-    bridge = WerkzeugBridge()
+```python
+from werkzeug import serving
+from werkzeug import wrappers
+from fluent_rest.bridge import Werkzeug
 
-    bridge.install(TODO())
+bridge = Werkzeug()
 
-    bridge.bind(
-        lambda a: serving.run_simple('localhost',
-                                     4000,
-                                     wrappers.Request.application(a))
-    )
+bridge.install(TODO())
+
+bridge.bind(
+    lambda a: serving.run_simple('localhost',
+                                 4000,
+                                 wrappers.Request.application(a))
+)
 ```
 
 Decorators

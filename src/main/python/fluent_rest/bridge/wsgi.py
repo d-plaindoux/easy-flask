@@ -41,7 +41,7 @@ class WSGIBridge:
         binder(self.__trigger)
 
 
-class WerkzeugBridge(WSGIBridge):
+class Werkzeug(WSGIBridge):
     def __init__(self):
         WSGIBridge.__init__(self)
 
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     from werkzeug import serving
     from werkzeug import wrappers
 
-    bridge = WerkzeugBridge()
+    bridge = Werkzeug()
 
     @GET
     @Path("/{name}")
