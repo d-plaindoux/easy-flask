@@ -1,5 +1,5 @@
 fluent-rest
-===========
+===============================================================================
 
 Fluent REST decorators (annotations) dedicated to Web framework like:
 * [Flask](http://flask.pocoo.org)
@@ -8,13 +8,13 @@ Fluent REST decorators (annotations) dedicated to Web framework like:
 * [Falcon](http://falconframework.org).
 
 Introduction
-============
+===============================================================================
 
 This library provides REST specification facilities dedicated to
 python web frameworks.
 
 `TODO` Example
-==============
+===============================================================================
 
 In this example we show how decorators can be used in order to specify a REST
 service dedicated to `TODO` data.
@@ -56,7 +56,7 @@ class TODO:
 ```
 
 Decorators
-==========
+===============================================================================
 
 The fluent-rest library provides a set of decorators applied at the
 class or at the method level. Decorators at the class level define
@@ -64,8 +64,8 @@ specification which are general like the path and available encoders and
 decoders. At the method level verbs are required and additional path can
 also be specified completing the class level path.
 
-Path decorator `@Path(path)`
-----------------------------
+`@Path(path)`
+-------------------------------------------------------------------------------
 
 A path decorator defines the path associated to a given REST service. A path
 corresponds to an URI to which a resource respond. Such path can be a simple
@@ -83,14 +83,18 @@ item = '{' IDENT (':' type) '}'
 type = 'int' | 'float' | 'string' | 'path' | 'uuid'
 ```
 
-Codec decorators
-----------------
+`@Consumes(...)` and `@Produces(...)`
+-------------------------------------------------------------------------------
 
-Verb decorators
----------------
+Each request comes with its constraints related to input and output
+representation. This is commonly denoted using mime and each of it has it
+own transformation process.
+
+`@GET`, `@POST`, `@PUT`, `@DELETE` ...
+-------------------------------------------------------------------------------
 
 License
-=======
+===============================================================================
 
 Copyright (C)2014 D. Plaindoux.
 

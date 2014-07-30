@@ -1,6 +1,6 @@
 import unittest
 from fluent_rest.spec.rest import *
-from fluent_rest.spec.inspection import inspect
+from fluent_rest.inspector.inspection import inspect
 
 
 class TestCase(unittest.TestCase):
@@ -32,6 +32,21 @@ class TestCase(unittest.TestCase):
 
         self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
 
+    def test_should_inspect_instance(self):
+        class Test:
+            def __init__(self):
+                pass
+
+            @GET
+            @Path('bar')
+            @Consumes('application/json')
+            def test(self):
+                pass
+
+        test = Test()
+
+        self.assertEquals(inspect(test).handle(lambda f: f), [test.test])
+
     def test_should_inspect_specified_class_extending_path(self):
         @Path('foo')
         class Test:
@@ -46,6 +61,23 @@ class TestCase(unittest.TestCase):
 
         self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
         self.assertEquals(specs(Test.test).getPath(), 'foo/bar')
+
+    def test_should_inspect_specified_instance_extending_path(self):
+        @Path('foo')
+        class Test:
+            def __init__(self):
+                pass
+
+            @GET
+            @Path('bar')
+            @Consumes('application/json')
+            def test(self):
+                pass
+
+        test = Test()
+
+        self.assertEquals(inspect(test).handle(lambda f: f), [test.test])
+        self.assertEquals(specs(test.test).getPath(), 'foo/bar')
 
     def test_should_inspect_specified_class_adding_path(self):
         @Path('foo')
