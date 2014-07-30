@@ -12,8 +12,10 @@ class SpecificationInstance:
         parameters = {}
 
         for name in inspect.getargspec(self.specification)[0]:
-            if name == 'data':
-                parameters.data = data
+            if name == 'self':
+                pass
+            elif name == 'data':
+                parameters['data'] = data
             else:
                 parameters[name] = self.variables(name)
 
