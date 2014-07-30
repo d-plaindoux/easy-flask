@@ -34,7 +34,8 @@ class TODO:
         # returns todo
         ...
 
-    @GET @Path("{id:uuid}")
+    @GET
+    @Path("{id:uuid}")
     def get(self, id):
         # returns identified todo
         ...
@@ -44,20 +45,22 @@ class TODO:
         # creates a now todo using `data`
         ...
 
-    @PUT @Path("{id:uuid}")
+    @PUT
+    @Path("{id:uuid}")
     def modify(self, id, data):
         # modifies an identified todo using `data`
         ...
 
-    @DELETE @Path("{id:uuid}")
+    @DELETE
+    @Path("{id:uuid}")
     def remove(self, id):
         # deletes an identified todo
         ...
 ```
 
-Then creating a WSGI server instance based on
-[Werkzeug](http://werkzeug.pocoo.org) utility library can be easily done using
-provided bridge.
+Then creating a WSGI server instance based on utility library like
+[Werkzeug](http://werkzeug.pocoo.org) can be easily done using provided
+bridge.
 
 ```python
 from werkzeug import serving
