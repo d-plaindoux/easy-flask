@@ -1,6 +1,9 @@
-"""
-Module providing specification capabilities using rest decorators.
-"""
+# Copyright (C)2014 D. Plaindoux.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option) any
+# later version.
 
 from fluent_rest.exceptions import OverloadedPathException
 from fluent_rest.exceptions import OverloadedVerbException
@@ -13,23 +16,15 @@ class Specification:
     """
 
     def __init__(self):
+        self.__combined = None
         self.__specs = {}
 
     def combine(self, specification):
-        if specification.hasPath():
-            if self.hasPath():
-                path = self.__deletePath()
-                self.Path("%s/%s" % (specification.getPath(), path))
-            else:
-                self.Path(specification.getPath())
-
-        if specification.hasConsumes():
-            [self.Consumes(c) for c in specification.getConsumes()]
-
-        if specification.hasProduces():
-            [self.Produces(c) for c in specification.getProduces()]
-
+        self.__combined = specification
         return self
+
+    def __str__(self):
+        return str(self.__specs)
 
     # ------------------------------------------------------------------------
     # Private behaviors
@@ -113,25 +108,32 @@ class Specification:
         """
         Check is a Path has been setup
         """
-        return Specification.__PATH in self.__specs
+        return (
+            Specification.__PATH in self.__specs
+            or
+            (self.__combined and self.__combined.hasPath())
+        )
 
     def getPath(self):
         """
         Returns the setup Path or None
         """
-        if self.hasPath():
-            return self.__specs[Specification.__PATH]
-        else:
-            return None
 
-    def __deletePath(self):
-        """
-        Returns the setup Path or None
-        """
+        def combinedPath():
+            if self.__combined and self.__combined.hasPath():
+                c = self.__combined.getPath()
+                return lambda p: "%s/%s" % (c, p) if p else c
+            else:
+                return lambda p: p
+
+        def localPath():
+            if Specification.__PATH in self.__specs:
+                return self.__specs[Specification.__PATH]
+            else:
+                return None
+
         if self.hasPath():
-            path = self.__specs[Specification.__PATH]
-            del self.__specs[Specification.__PATH]
-            return path
+            return combinedPath()(localPath())
         else:
             return None
 
@@ -181,22 +183,21 @@ class Specification:
         """
         TODO
         """
-        return Specification.__CONSUMES in self.__specs
-
-    def getConsumes(self):
-        """
-        TODO
-        """
-        if self.hasConsumes():
-            return self.__specs[Specification.__CONSUMES]
-        else:
-            return None
+        return (
+            Specification.__CONSUMES in self.__specs
+            or
+            (self.__combined and self.__combined.hasConsumes(self))
+        )
 
     def hasGivenConsumes(self, mime):
         """
         TODO
         """
-        return self.__has(self.__CONSUMES, mime)
+        return (
+            self.__has(self.__CONSUMES, mime)
+            or
+            (self.__combined and self.__combined.hasGivenConsumes(mime))
+        )
 
     # ------------------------------------------------------------------------
     # Produces management
@@ -212,22 +213,21 @@ class Specification:
         """
         TODO
         """
-        return Specification.__PRODUCES in self.__specs
-
-    def getProduces(self):
-        """
-        TODO
-        """
-        if self.hasProduces():
-            return self.__specs[Specification.__PRODUCES]
-        else:
-            return None
+        return (
+            Specification.__PRODUCES in self.__specs
+            or
+            (self.__combined and self.__combined.hasProduced())
+        )
 
     def hasGivenProduces(self, mime):
         """
         TODO
         """
-        return self.__has(self.__PRODUCES, mime)
+        return (
+            self.__has(self.__PRODUCES, mime)
+            or
+            (self.__combined and self.__combined.hasGivenProduces(mime))
+        )
 
     # ------------------------------------------------------------------------
     # Static behaviors
