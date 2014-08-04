@@ -34,7 +34,7 @@ class WSGIBridge:
         for s in self.__filters:
             instance = s.filterProvider(data)
             if instance:
-                return instance(self, data)
+                return instance(data)
 
         return self.failure(500, str(data))
 
@@ -55,7 +55,12 @@ class WSGIBridge:
         try:
             return self.__applyUsingSpecification(wrapper)
         except Exception, e:
-            return self.__applyUsingProvider(e)
+            try:
+                return self.__applyUsingProvider(e)
+            except WebException, e:
+                return self.failure(e.status, e.message)
+            except Exception, e2:
+                self.failure(500, str(e2))
 
     def register(self, service):
         self.__filters.extend(inspect(service).handle(SpecificationFilter))

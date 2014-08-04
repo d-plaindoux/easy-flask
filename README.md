@@ -21,6 +21,7 @@ service dedicated to `Todo` data.
 
 ```python
 from fluent_rest.rest import *
+from fluent_rest.response import WebException
 
 
 class TodoNotFound(Exception):
@@ -65,7 +66,6 @@ class Todo:
     @DELETE
     @Path("{id:uuid}")
     def remove(self, id):
-        # deletes an identified Todo
         if id in self.__todo:
             del self.__todo[id]
             return id
@@ -74,7 +74,7 @@ class Todo:
 
     @Provider(TodoNotFound)
     def todoNotFound(self, bridge, e):
-        return bridge.failure(404, "todo %s not found" % e.id)
+        raise WebException.notFound("todo %s not found" % e.id)
 ```
 
 Then creating a WSGI server instance based on utility library like

@@ -42,8 +42,8 @@ class Providers:
         pass
 
     @Provider(TODONotFound)
-    def todo(self, bridge, _):
-        return bridge.failure(404)
+    def todo(self, _):
+        raise WebException.notFound()
 
 
 @Path("/todo")
@@ -71,7 +71,7 @@ class TODO:
         if id in self.todo:
             return self.todo[id]
         else:
-            raise WebException.notFound()
+            raise TODONotFound()
 
     @POST
     def create(self, data):

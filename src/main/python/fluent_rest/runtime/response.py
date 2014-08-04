@@ -5,8 +5,6 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-from fluent_rest.spec.rest import Provider
-
 
 class WebException(Exception):
     def __init__(self, status, message=None):
@@ -15,18 +13,13 @@ class WebException(Exception):
         self.message = message
 
     @staticmethod
-    def notFound():
-        return WebException(404, "Not found")
+    def notFound(message=None):
+        return WebException(404,
+                            "Not found" if message is None else message)
 
     @staticmethod
-    def notAcceptable():
-        return WebException(406, "Not acceptable")
-
-        # TBC ...
-
-
-@Provider(WebException)
-def webExceptionProvider(bridge, exception):
-    return bridge.failure(exception.status, exception.message)
+    def notAcceptable(message=None):
+        return WebException(406,
+                            "Not acceptable" if message is None else message)
 
 
