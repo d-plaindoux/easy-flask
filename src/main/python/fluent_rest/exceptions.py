@@ -21,6 +21,11 @@ class OverloadedVerbException(Exception):
         super(OverloadedVerbException, self).__init__(*args, **kwargs)
 
 
+class OverloadedProviderException(Exception):
+    def __init__(self, *args, **kwargs):
+        super(OverloadedProviderException, self).__init__(*args, **kwargs)
+
+
 class OverloadedPathException(Exception):
     def __init__(self, *args, **kwargs):
         super(OverloadedPathException, self).__init__(*args, **kwargs)

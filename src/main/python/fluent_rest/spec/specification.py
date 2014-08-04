@@ -6,6 +6,7 @@
 # later version.
 
 from fluent_rest.exceptions import OverloadedPathException
+from fluent_rest.exceptions import OverloadedProviderException
 from fluent_rest.exceptions import OverloadedVerbException
 
 
@@ -242,7 +243,7 @@ class Specification:
         """
         return self.__define(self.__PROVIDER,
                              kind,
-                             self.__errorIfDefine(OverloadedVerbException))
+                             self.__errorIfDefine(OverloadedProviderException))
 
     def hasProvider(self):
         """

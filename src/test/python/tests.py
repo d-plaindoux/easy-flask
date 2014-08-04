@@ -13,6 +13,7 @@ if __name__ == '__main__':
     suite.addTest(suites.fluent_rest.spec.path_parse.suite())
     suite.addTest(suites.fluent_rest.spec.path_match.suite())
     suite.addTest(suites.fluent_rest.spec.verb.suite())
+    suite.addTest(suites.fluent_rest.spec.provider.suite())
     suite.addTest(suites.fluent_rest.spec.mime.suite())
     suite.addTest(suites.fluent_rest.inspector.inspection.suite())
     suite.addTest(suites.fluent_rest.bridge.wsgi.suite())
