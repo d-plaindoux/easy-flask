@@ -90,7 +90,7 @@ from fluent_rest.bridge import Werkzeug
 
 bridge = Werkzeug()
 
-bridge.install(TODO())
+bridge.register(TODO()).register(Providers())
 
 bridge.bind(
     lambda a: serving.run_simple('localhost',
