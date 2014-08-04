@@ -21,41 +21,62 @@ service dedicated to `TODO` data.
 
 ```python
 from fluent_rest.rest import *
+class TODONotFound(Exception):
+    pass
 
-@Path("todo")
+
+class Providers:
+    def __init__(self):
+        pass
+
+    @Provider(TODONotFound)
+    def todo(self, bridge, _):
+        return bridge.failure(404)
+
+
+@Path("/todo")
 @Consumes("application/json")
 @Produces("application/json")
 class TODO:
     def __init__(self):
-        pass
+        self.todo = {}
 
     @GET
     def list(self):
-        # returns todo
-        ...
+        return self.todo
 
     @GET
     @Path("{id:uuid}")
     def get(self, id):
-        # returns identified todo
-        ...
+        if id in self.todo:
+            return self.todo[id]
+        else:
+            raise TODONotFound()
 
     @POST
     def create(self, data):
-        # creates a now todo using `data`
-        ...
+        id = uuid.uuid1()
+        self.todo[id] = data
+        return id
 
     @PUT
     @Path("{id:uuid}")
     def modify(self, id, data):
-        # modifies an identified todo using `data`
-        ...
+        if id in self.todo:
+            self.todo[id] = data
+            return id
+        else:
+            raise TODONotFound()
 
     @DELETE
     @Path("{id:uuid}")
     def remove(self, id):
         # deletes an identified todo
-        ...
+        if id in self.todo:
+            del self.todo[id]
+            return id
+        else:
+            raise TODONotFound()
 ```
 
 Then creating a WSGI server instance based on utility library like
