@@ -13,70 +13,67 @@ Introduction
 This library provides REST specification facilities dedicated to
 python web frameworks.
 
-`TODO` Example
+`Todo` Example
 ===============================================================================
 
 In this example we show how decorators can be used in order to specify a REST
-service dedicated to `TODO` data.
+service dedicated to `Todo` data.
 
 ```python
 from fluent_rest.rest import *
-class TODONotFound(Exception):
+
+
+class TodoNotFound(Exception):
     pass
-
-
-class Providers:
-    def __init__(self):
-        pass
-
-    @Provider(TODONotFound)
-    def todo(self, bridge, _):
-        return bridge.failure(404)
 
 
 @Path("/todo")
 @Consumes("application/json")
 @Produces("application/json")
-class TODO:
+class Todo:
     def __init__(self):
-        self.todo = {}
+        self.Todo = {}
 
     @GET
     def list(self):
-        return self.todo
+        return self.Todo
 
     @GET
     @Path("{id:uuid}")
     def get(self, id):
-        if id in self.todo:
-            return self.todo[id]
+        if id in self.Todo:
+            return self.Todo[id]
         else:
-            raise TODONotFound()
+            raise TodoNotFound()
 
     @POST
     def create(self, data):
         id = uuid.uuid1()
-        self.todo[id] = data
+        self.Todo[id] = data
         return id
 
     @PUT
     @Path("{id:uuid}")
     def modify(self, id, data):
-        if id in self.todo:
-            self.todo[id] = data
+        if id in self.Todo:
+            self.Todo[id] = data
             return id
         else:
-            raise TODONotFound()
+            raise TodoNotFound()
 
     @DELETE
     @Path("{id:uuid}")
     def remove(self, id):
-        # deletes an identified todo
-        if id in self.todo:
-            del self.todo[id]
+        # deletes an identified Todo
+        if id in self.Todo:
+            del self.Todo[id]
             return id
         else:
-            raise TODONotFound()
+            raise TodoNotFound()
+
+    @Provider(TodoNotFound)
+    def Todo(self, bridge, _):
+        return bridge.failure(404)
 ```
 
 Then creating a WSGI server instance based on utility library like
@@ -90,7 +87,7 @@ from fluent_rest.bridge import Werkzeug
 
 bridge = Werkzeug()
 
-bridge.register(TODO()).register(Providers())
+bridge.register(Todo())
 
 bridge.bind(
     lambda a: serving.run_simple('localhost',
