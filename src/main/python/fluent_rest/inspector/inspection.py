@@ -9,6 +9,7 @@ from inspect import getmembers
 from inspect import isfunction
 from inspect import isclass
 from inspect import ismethod
+from fluent_rest.spec import rest
 
 from fluent_rest.spec.rest import specs
 from fluent_rest.spec.rest import specsExists
@@ -40,14 +41,15 @@ class Inspector:
         """
         return [handler(f) for f in self.entries if specsExists(f)]
 
+
 class ObjectInspector(Inspector):
     """
     Inspector dedicated to a class definition
     """
 
-    def __init__(self, container, clazz):
-        Inspector.__init__(self, ObjectInspector.__methods(container))
-        self.container = container
+    def __init__(self, element, clazz):
+        Inspector.__init__(self, ObjectInspector.__methods(element))
+        self.container = element
         self.clazz = clazz
         self.performClosure()
 

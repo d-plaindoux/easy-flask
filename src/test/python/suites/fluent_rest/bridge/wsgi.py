@@ -10,7 +10,7 @@ from uuid import uuid1
 from fluent_rest.bridge.wsgi import WSGIBridge
 from fluent_rest.runtime.request import Request
 from fluent_rest.runtime.response import WebException
-from fluent_rest.spec.rest import GET
+from fluent_rest.spec.rest import GET, Provider
 from fluent_rest.spec.rest import PUT
 from fluent_rest.spec.rest import POST
 from fluent_rest.spec.rest import DELETE
@@ -31,6 +31,19 @@ class TestWSGIBridge(WSGIBridge):
 
     def failure(self, status, message=None):
         return status
+
+
+class TODONotFound(Exception):
+    pass
+
+
+class Providers:
+    def __init__(self):
+        pass
+
+    @Provider(TODONotFound)
+    def todo(self, bridge, _):
+        return bridge.failure(404)
 
 
 @Path("/todo")
@@ -75,7 +88,7 @@ class TODO:
             self.todo[id] = data
             return id
         else:
-            raise WebException.notFound()
+            raise TODONotFound()
 
     @DELETE
     @Path("{id:uuid}")
@@ -85,12 +98,15 @@ class TODO:
             del self.todo[id]
             return id
         else:
-            raise WebException.notFound()
+            raise TODONotFound()
 
 
 class TestCase(unittest.TestCase):
     def setUp(self):
-        self.server = TestWSGIBridge().register(TODO())
+        self.server = TestWSGIBridge(). \
+            register(TODO()). \
+            register(Providers())
+
 
     def tearDown(self):
         pass
@@ -111,7 +127,7 @@ class TestCase(unittest.TestCase):
 
         response = self.server.trigger(request)
 
-        self.assertEqual(500, response)
+        self.assertEqual(404, response)
 
     def test_should_have_post_todo(self):
         request = Request.post("/todo",
@@ -147,7 +163,7 @@ class TestCase(unittest.TestCase):
 
         response = self.server.trigger(request)
 
-        self.assertEqual(500, response)
+        self.assertEqual(404, response)
 
     def test_should_delete_created_todo(self):
         request = Request.post("/todo",

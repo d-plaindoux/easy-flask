@@ -34,6 +34,7 @@ class Specification:
     __PATH = u'rest@Path'
     __CONSUMES = u'rest@Consumes'
     __PRODUCES = u'rest@Produces'
+    __PROVIDER = u'rest@Provider'
 
     def __define(self, key, value, setup):
         """
@@ -101,7 +102,8 @@ class Specification:
         Define the rest URI as a Path. This path can contain typed variable
         definition. For this purpose the FLASK representation path is chosen.
         """
-        return self.__define(self.__PATH, path,
+        return self.__define(self.__PATH,
+                             path,
                              self.__errorIfDefine(OverloadedPathException))
 
     def hasPath(self):
@@ -145,7 +147,8 @@ class Specification:
         """
         Define a verb like 'GET', 'PUT', 'POST', 'DELETE' and ...
         """
-        return self.__define(self.__VERB, name,
+        return self.__define(self.__VERB,
+                             name,
                              self.__errorIfDefine(OverloadedVerbException))
 
     def hasVerb(self):
@@ -230,24 +233,51 @@ class Specification:
         )
 
     # ------------------------------------------------------------------------
+    # Provider management
+    # ------------------------------------------------------------------------
+
+    def Provider(self, kind):
+        """
+        TODO
+        """
+        return self.__define(self.__PROVIDER,
+                             kind,
+                             self.__errorIfDefine(OverloadedVerbException))
+
+    def hasProvider(self):
+        """
+        TODO
+        """
+        return Specification.__PROVIDER in self.__specs
+
+    def getProvider(self):
+        """
+        TODO
+        """
+        if self.hasProvider():
+            return self.__specs[Specification.__PROVIDER]
+        else:
+            return None
+
+    # ------------------------------------------------------------------------
     # Static behaviors
     # ------------------------------------------------------------------------
 
     @staticmethod
-    def exists(function):
+    def exists(element):
         """
         TODO
         """
-        return "__rest__" in function.__dict__
+        return hasattr(element, 'rest_specification')
 
     @staticmethod
-    def get(function):
+    def get(element):
         """
         TODO
         """
-        if "__rest__" not in function.__dict__:
-            function.__dict__["__rest__"] = Specification()
-        return function.__dict__["__rest__"]
+        if not Specification.exists(element):
+            element.rest_specification = Specification()
+        return element.rest_specification
 
     @staticmethod
     def getAndDefine(continuation):

@@ -8,23 +8,11 @@
 from fluent_rest.spec.rest import Provider
 
 
-class ResponseProvider:
-    def __init__(self):
-        pass
-
-    def response(self, bridge):
-        return bridge.failure(500, None)
-
-
-@Provider
-class WebException(Exception, ResponseProvider):
+class WebException(Exception):
     def __init__(self, status, message=None):
         Exception.__init__(self)
         self.status = status
         self.message = message
-
-    def response(self, bridge):
-        return bridge.failure(self.status, message=self.message)
 
     @staticmethod
     def notFound():
@@ -34,4 +22,11 @@ class WebException(Exception, ResponseProvider):
     def notAcceptable():
         return WebException(406, "Not acceptable")
 
-    # TBC ...
+        # TBC ...
+
+
+@Provider(WebException)
+def webExceptionProvider(bridge, exception):
+    return bridge.failure(exception.status, exception.message)
+
+

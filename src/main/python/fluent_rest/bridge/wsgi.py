@@ -4,9 +4,11 @@
 # under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
+
 from fluent_rest.runtime.filter import SpecificationFilter
 from fluent_rest.runtime.request import Request
 from fluent_rest.inspector.inspection import inspect
+from fluent_rest.runtime.response import WebException
 
 
 class WSGIBridge:
@@ -28,18 +30,32 @@ class WSGIBridge:
     def failure(self, status, message=None):
         raise NotImplemented()
 
-    def trigger(self, request):
-        wrapper = self.request(request)
+    def __applyUsingProvider(self, data):
         for s in self.__filters:
-            instance = s.filter(wrapper)
+            instance = s.filterProvider(data)
             if instance:
-                try:
+                return instance(self, data)
+
+        return self.failure(500, str(data))
+
+    def __applyUsingSpecification(self, wrapper):
+        try:
+            for s in self.__filters:
+                instance = s.filterSpecification(wrapper)
+                if instance:
                     response = instance.execute(wrapper.data())
                     return self.response(response)
-                except Exception, e:
-                    return self.failure(500, str(e))
+        except WebException, e:
+            return self.failure(e.status, e.message)
 
         return self.failure(404, "Not found")
+
+    def trigger(self, request):
+        wrapper = self.request(request)
+        try:
+            return self.__applyUsingSpecification(wrapper)
+        except Exception, e:
+            return self.__applyUsingProvider(e)
 
     def register(self, service):
         self.__filters.extend(inspect(service).handle(SpecificationFilter))

@@ -38,7 +38,19 @@ class SpecificationFilter:
     def __init__(self, specification):
         self.specification = specification
 
-    def filter(self, request):
+    def filterProvider(self, response):
+        """
+        Method called when a response must be managed transparently using
+        providers
+        """
+        spec = rest.specs(self.specification)
+
+        if spec.hasProvider() and isinstance(response, spec.getProvider()):
+            return self.specification
+        else:
+            return None
+
+    def filterSpecification(self, request):
         """
         Method called when the filter must be performed using a given request.
         If the request respects the specification it returns a set of bound
