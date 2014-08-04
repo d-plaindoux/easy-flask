@@ -24,7 +24,8 @@ from fluent_rest.rest import *
 
 
 class TodoNotFound(Exception):
-    pass
+    def __init__(id):
+        self.id = id
 
 
 @Path("/todo")
@@ -32,48 +33,48 @@ class TodoNotFound(Exception):
 @Produces("application/json")
 class Todo:
     def __init__(self):
-        self.Todo = {}
+        self.__todo = {}
 
     @GET
     def list(self):
-        return self.Todo
+        return self.__todo
 
     @GET
     @Path("{id:uuid}")
     def get(self, id):
-        if id in self.Todo:
-            return self.Todo[id]
+        if id in self.__todo:
+            return self.__todo[id]
         else:
-            raise TodoNotFound()
+            raise TodoNotFound(id)
 
     @POST
     def create(self, data):
         id = uuid.uuid1()
-        self.Todo[id] = data
+        self.__todo[id] = data
         return id
 
     @PUT
     @Path("{id:uuid}")
     def modify(self, id, data):
-        if id in self.Todo:
-            self.Todo[id] = data
+        if id in self.__todo:
+            self.__todo[id] = data
             return id
         else:
-            raise TodoNotFound()
+            raise TodoNotFound(id)
 
     @DELETE
     @Path("{id:uuid}")
     def remove(self, id):
         # deletes an identified Todo
-        if id in self.Todo:
-            del self.Todo[id]
+        if id in self.__todo:
+            del self.__todo[id]
             return id
         else:
-            raise TodoNotFound()
+            raise TodoNotFound(id)
 
     @Provider(TodoNotFound)
-    def Todo(self, bridge, _):
-        return bridge.failure(404)
+    def todoNotFound(self, bridge, e):
+        return bridge.failure(404, "todo %s not found" % e.id)
 ```
 
 Then creating a WSGI server instance based on utility library like
