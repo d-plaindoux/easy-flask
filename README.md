@@ -73,7 +73,8 @@ class Todo:
             raise TodoNotFound(id)
 
     @Provider(TodoNotFound)
-    def todoNotFound(self, bridge, e):
+    @staticmethod
+    def todoNotFound(e):
         raise WebException.notFound("todo %s not found" % e.id)
 ```
 

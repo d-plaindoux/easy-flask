@@ -36,7 +36,8 @@ def Produces(mime):
 def Provider(kind):
     return Specification.getAndDefine(lambda s: s.Provider(kind))
 
-GET = Verb('GET')
 PUT = Verb('PUT')
 POST = Verb('POST')
+
+GET = Verb('GET')
 DELETE = Verb('DELETE')

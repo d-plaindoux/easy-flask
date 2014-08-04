@@ -60,7 +60,7 @@ class WSGIBridge:
             except WebException, e:
                 return self.failure(e.status, e.message)
             except Exception, e2:
-                self.failure(500, str(e2))
+                return self.failure(500, str(e2))
 
     def register(self, service):
         self.__filters.extend(inspect(service).handle(SpecificationFilter))

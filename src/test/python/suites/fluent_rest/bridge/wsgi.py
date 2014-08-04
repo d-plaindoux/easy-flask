@@ -6,7 +6,7 @@
 # later version.
 
 import unittest
-from uuid import uuid1
+import uuid
 from fluent_rest.bridge.wsgi import WSGIBridge
 from fluent_rest.runtime.request import Request
 from fluent_rest.runtime.response import WebException
@@ -33,23 +33,15 @@ class TestWSGIBridge(WSGIBridge):
         return status
 
 
-class TODONotFound(Exception):
-    pass
-
-
-class Providers:
-    def __init__(self):
-        pass
-
-    @Provider(TODONotFound)
-    def todo(self, _):
-        raise WebException.notFound()
+class TodoNotFound(Exception):
+    def __init__(self, id):
+        self.id = id
 
 
 @Path("/todo")
 @Consumes("application/json")
 @Produces("application/json")
-class TODO:
+class Todo:
     def __init__(self):
         self.todo = {}
 
@@ -62,7 +54,6 @@ class TODO:
 
     @GET
     def list(self):
-        # returns todo
         return self.todo
 
     @GET
@@ -71,41 +62,41 @@ class TODO:
         if id in self.todo:
             return self.todo[id]
         else:
-            raise TODONotFound()
+            raise TodoNotFound(id)
 
     @POST
     def create(self, data):
-        # creates a now todo using `data`
-        id = uuid1()
+        id = uuid.uuid1()
         self.todo[id] = data
         return id
 
     @PUT
     @Path("{id:uuid}")
     def modify(self, id, data):
-        # modifies an identified todo using `data`
         if id in self.todo:
             self.todo[id] = data
             return id
         else:
-            raise TODONotFound()
+            raise TodoNotFound(id)
 
     @DELETE
     @Path("{id:uuid}")
     def remove(self, id):
-        # deletes an identified todo
         if id in self.todo:
             del self.todo[id]
             return id
         else:
-            raise TODONotFound()
+            raise TodoNotFound(id)
+
+    @Provider(TodoNotFound)
+    def notFound(self, e):
+        raise WebException.notFound("todo %s not found" % e.id)
 
 
 class TestCase(unittest.TestCase):
     def setUp(self):
         self.server = TestWSGIBridge(). \
-            register(TODO()). \
-            register(Providers())
+            register(Todo())
 
 
     def tearDown(self):
@@ -121,7 +112,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual({}, response)
 
     def test_should_have_no_todo(self):
-        request = Request.get("/todo/%s" % uuid1(),
+        request = Request.get("/todo/%s" % uuid.uuid1(),
                               "application/json",
                               "application/json")
 
@@ -157,7 +148,7 @@ class TestCase(unittest.TestCase):
         self.assertIsNotNone(response[id])
 
     def test_should_not_delete_todo(self):
-        request = Request.delete("/todo/%s" % uuid1(),
+        request = Request.delete("/todo/%s" % uuid.uuid1(),
                                  "application/json",
                                  "application/json")
 
