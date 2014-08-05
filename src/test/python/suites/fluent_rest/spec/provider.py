@@ -31,19 +31,10 @@ class TestCase(unittest.TestCase):
             def test_with_two_providers():
                 pass
 
-                self.fail('Cannot have more than one provider')
+            self.fail('Cannot have more than one provider')
 
         except OverloadedProviderException, _:
             pass
-
-
-def test_should_have_GET_in_class(self):
-    @GET
-    class Test:
-        def __init__(self):
-            pass
-
-    self.assertTrue(specs(Test).hasGivenVerb(u'GET'))
 
 
 def suite():
