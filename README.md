@@ -7,6 +7,11 @@ Fluent REST decorators (annotations) dedicated to Web framework like:
 * [Pecan](http://www.pecanpy.org) and
 * [Falcon](http://falconframework.org).
 
+Build status
+-------------------------------------------------------------------------------
+
+[![Build Status](https://api.travis-ci.org/d-plaindoux/fluent-rest.png)](https://travis-ci.org/d-plaindoux/fluent-rest)
+
 Introduction
 ===============================================================================
 
