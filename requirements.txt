@@ -1,0 +1,5 @@
+# Required packages for the development
+
+Werkzeug==0.9.6
+
+# End of requirements
