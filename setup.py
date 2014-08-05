@@ -5,16 +5,18 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-from distutils.core import setup
+from setuptools import setup
+
 
 setup(
     name='fluent-rest',
     version='0.1',
-    packages=['fluent_rest'],
-    package_dir={'': 'src/main/python'},
+    packages=['fluent_rest', 'tests'],
     url='https://github.com/d-plaindoux/fluent-rest',
     license='LGPL ',
-    author='dplaindoux',
-    author_email='d.plaindoux@fungus.fr',
-    description='Utilities for REST declaration using decorators'
+    author='d-plaindoux',
+    author_email='d.plaindoux@free.fr',
+    keywords='REST WSGI decorators JAX-RS',
+    description='decorators for seamless REST library specification',
+    test_suite="tests"
 )

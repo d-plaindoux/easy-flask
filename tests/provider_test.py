@@ -7,7 +7,7 @@
 
 import unittest
 from fluent_rest.spec.rest import *
-from fluent_rest.exceptions import OverloadedVerbException, OverloadedProviderException
+from fluent_rest.exceptions import OverloadedProviderException
 
 
 class TestCase(unittest.TestCase):

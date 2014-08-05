@@ -5,4 +5,3 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-import wsgi

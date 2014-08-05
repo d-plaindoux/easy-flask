@@ -5,6 +5,4 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-import path
-import rest
-import specification
+

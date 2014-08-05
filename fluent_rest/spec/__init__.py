@@ -4,7 +4,5 @@
 # under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
+from fluent_rest.spec import specification, path, rest
 
-import spec
-import inspector
-import bridge

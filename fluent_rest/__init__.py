@@ -5,8 +5,3 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-import mime
-import path_match
-import path_parse
-import verb
-import provider

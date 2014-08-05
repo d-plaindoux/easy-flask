@@ -5,10 +5,11 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
+from uuid import UUID
+
 from re import match
 from re import escape
 from re import compile
-from uuid import UUID
 from fluent_rest.exceptions import TypeUndefinedException
 from fluent_rest.exceptions import VariableUndefinedException
 
