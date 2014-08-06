@@ -35,6 +35,10 @@ def Produces(mime):
 def Provider(kind):
     return Specification.getAndDefine(lambda s: s.Provider(kind))
 
+
+def Inject(kind):
+    return Specification.getAndDefine(lambda s: s.Inject(kind))
+
 PUT = Verb('PUT')
 POST = Verb('POST')
 

@@ -11,6 +11,11 @@ class TypeUndefinedException(Exception):
         super(TypeUndefinedException, self).__init__(*args, **kwargs)
 
 
+class OverloadedInjectException(Exception):
+    def __init__(self, *args, **kwargs):
+        super(OverloadedInjectException, self).__init__(*args, **kwargs)
+
+
 class VariableUndefinedException(Exception):
     def __init__(self, *args, **kwargs):
         super(VariableUndefinedException, self).__init__(*args, **kwargs)

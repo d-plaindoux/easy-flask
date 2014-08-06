@@ -6,6 +6,7 @@
 # later version.
 
 from fluent_rest.exceptions import OverloadedPathException
+from fluent_rest.exceptions import OverloadedInjectException
 from fluent_rest.exceptions import OverloadedProviderException
 from fluent_rest.exceptions import OverloadedVerbException
 
@@ -36,6 +37,7 @@ class Specification:
     __CONSUMES = u'rest@Consumes'
     __PRODUCES = u'rest@Produces'
     __PROVIDER = u'rest@Provider'
+    __INJECT = u'rest@Inject'
 
     def __define(self, key, value, setup):
         """
@@ -261,6 +263,33 @@ class Specification:
             return None
 
     # ------------------------------------------------------------------------
+    # Produces management
+    # ------------------------------------------------------------------------
+
+    def Inject(self, kind):
+        """
+        TODO
+        """
+        return self.__define(self.__INJECT,
+                             kind,
+                             self.__errorIfDefine(OverloadedInjectException))
+
+    def hasInject(self):
+        """
+        TODO
+        """
+        return Specification.__INJECT in self.__specs
+
+    def getInject(self):
+        """
+        TODO
+        """
+        if self.hasInject():
+            return self.__specs[Specification.__INJECT]
+        else:
+            return None
+
+    # ------------------------------------------------------------------------
     # Static behaviors
     # ------------------------------------------------------------------------
 
@@ -277,6 +306,7 @@ class Specification:
         TODO
         """
         if not Specification.exists(element):
+            # TODO(didier) Find a better solution for rest spec' injection
             element.rest_specification = Specification()
         return element.rest_specification
 
