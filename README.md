@@ -1,4 +1,4 @@
-fluent-rest
+fluent-rest [![Build Status](https://travis-ci.org/d-plaindoux/fluent-rest.svg?branch=master)](https://travis-ci.org/d-plaindoux/fluent-rest)
 ===============================================================================
 
 Fluent REST decorators (annotations) dedicated to Web framework like:
@@ -6,11 +6,6 @@ Fluent REST decorators (annotations) dedicated to Web framework like:
 * [Django](http://www.django-rest-framework.org)
 * [Pecan](http://www.pecanpy.org) and
 * [Falcon](http://falconframework.org).
-
-Build status
--------------------------------------------------------------------------------
-
-[![Build Status](https://api.travis-ci.org/d-plaindoux/fluent-rest.png)](https://travis-ci.org/d-plaindoux/fluent-rest)
 
 Introduction
 ===============================================================================

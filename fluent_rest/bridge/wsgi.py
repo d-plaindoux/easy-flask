@@ -4,10 +4,11 @@
 # under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
+import inspect
 
 from fluent_rest.runtime.filter import SpecificationFilter
 from fluent_rest.runtime.request import Request
-from fluent_rest.inspector.inspection import inspect
+from fluent_rest.inspector.inspection import inspector
 from fluent_rest.runtime.response import WebException
 
 
@@ -34,7 +35,7 @@ class WSGIBridge:
         for s in self.__filters:
             instance = s.filterProvider(data)
             if instance:
-                return instance(data)
+                return instance.execute(data)
 
         return self.failure(500, str(data))
 
@@ -63,7 +64,7 @@ class WSGIBridge:
                 return self.failure(500, str(e2))
 
     def register(self, service):
-        self.__filters.extend(inspect(service).handle(SpecificationFilter))
+        self.__filters.extend(inspector(service).handle(SpecificationFilter))
         return self
 
     def unregister(self, _):

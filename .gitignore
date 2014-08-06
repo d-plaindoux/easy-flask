@@ -4,7 +4,8 @@ venv
 .settings
 .classpath
 .buildpath
-.gradle
+build
+*.egg-info
 *~
 *.iws
 *.iml

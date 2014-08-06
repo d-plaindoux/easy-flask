@@ -93,11 +93,9 @@ class Todo:
         raise WebException.notFound("todo %s not found" % e.id)
 
 
-class TestCase(unittest.TestCase):
+class TestCaseWithInstance(unittest.TestCase):
     def setUp(self):
-        self.server = TestWSGIBridge(). \
-            register(Todo())
-
+        self.bridge = TestWSGIBridge().register(Todo())
 
     def tearDown(self):
         pass
@@ -107,7 +105,7 @@ class TestCase(unittest.TestCase):
                               "application/json",
                               "application/json")
 
-        response = self.server.trigger(request)
+        response = self.bridge.trigger(request)
 
         self.assertEqual({}, response)
 
@@ -116,7 +114,7 @@ class TestCase(unittest.TestCase):
                               "application/json",
                               "application/json")
 
-        response = self.server.trigger(request)
+        response = self.bridge.trigger(request)
 
         self.assertEqual(404, response)
 
@@ -126,7 +124,7 @@ class TestCase(unittest.TestCase):
                                "application/json",
                                '{"a":12}')
 
-        response = self.server.trigger(request)
+        response = self.bridge.trigger(request)
 
         self.assertIsNotNone(response)
 
@@ -136,13 +134,13 @@ class TestCase(unittest.TestCase):
                                "application/json",
                                '{"a":12}')
 
-        id = self.server.trigger(request)
+        id = self.bridge.trigger(request)
 
         request = Request.get("/todo",
                               "application/json",
                               "application/json")
 
-        response = self.server.trigger(request)
+        response = self.bridge.trigger(request)
 
         self.assertNotEqual({}, response)
         self.assertIsNotNone(response[id])
@@ -152,7 +150,7 @@ class TestCase(unittest.TestCase):
                                  "application/json",
                                  "application/json")
 
-        response = self.server.trigger(request)
+        response = self.bridge.trigger(request)
 
         self.assertEqual(404, response)
 
@@ -162,20 +160,98 @@ class TestCase(unittest.TestCase):
                                "application/json",
                                '{"a":12}')
 
-        id = self.server.trigger(request)
+        id = self.bridge.trigger(request)
 
         request = Request.delete("/todo/%s" % id,
                                  "application/json",
                                  "application/json")
 
-        response = self.server.trigger(request)
+        response = self.bridge.trigger(request)
 
         self.assertEqual(id, response)
 
 
+class TestCaseWithClass(unittest.TestCase):
+    def setUp(self):
+        self.bridge = TestWSGIBridge().register(Todo)
+
+    def tearDown(self):
+        pass
+
+    def test_should_have_empty_todo(self):
+        request = Request.get("/todo",
+                              "application/json",
+                              "application/json")
+
+        response = self.bridge.trigger(request)
+
+        self.assertEqual({}, response)
+
+    def test_should_have_no_todo(self):
+        request = Request.get("/todo/%s" % uuid.uuid1(),
+                              "application/json",
+                              "application/json")
+
+        response = self.bridge.trigger(request)
+
+        self.assertEqual(404, response)
+
+    def test_should_have_post_todo(self):
+        request = Request.post("/todo",
+                               "application/json",
+                               "application/json",
+                               '{"a":12}')
+
+        response = self.bridge.trigger(request)
+
+        self.assertIsNotNone(response)
+
+    def test_should_not_have_one_todo_after_post_todo(self):
+        request = Request.post("/todo",
+                               "application/json",
+                               "application/json",
+                               '{"a":12}')
+
+        id = self.bridge.trigger(request)
+
+        request = Request.get("/todo",
+                              "application/json",
+                              "application/json")
+
+        response = self.bridge.trigger(request)
+
+        self.assertEqual({}, response)
+
+    def test_should_not_delete_todo(self):
+        request = Request.delete("/todo/%s" % uuid.uuid1(),
+                                 "application/json",
+                                 "application/json")
+
+        response = self.bridge.trigger(request)
+
+        self.assertEqual(404, response)
+
+    def test_should_not_delete_created_todo(self):
+        request = Request.post("/todo",
+                               "application/json",
+                               "application/json",
+                               '{"a":12}')
+
+        id = self.bridge.trigger(request)
+
+        request = Request.delete("/todo/%s" % id,
+                                 "application/json",
+                                 "application/json")
+
+        response = self.bridge.trigger(request)
+
+        self.assertEqual(404, response)
+
+
 def suite():
     aSuite = unittest.TestSuite()
-    aSuite.addTest(unittest.makeSuite(TestCase))
+    aSuite.addTest(unittest.makeSuite(TestCaseWithInstance))
+    aSuite.addTest(unittest.makeSuite(TestCaseWithClass))
     return aSuite
 
 

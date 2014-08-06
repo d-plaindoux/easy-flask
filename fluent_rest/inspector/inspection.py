@@ -79,7 +79,7 @@ class FunctionInspector(Inspector):
         return function
 
 
-def inspect(definition):
+def inspector(definition):
     """
     General inspection function which call the adapted inspector depending
     on the corresponding definition type: object of function.

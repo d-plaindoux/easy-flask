@@ -10,6 +10,23 @@ from fluent_rest.spec import rest
 from fluent_rest.spec.path import Path
 
 
+class ProviderInstance:
+    def __init__(self, specification, variables=None):
+        self.specification = specification
+        self.variables = lambda f: None if not variables else variables
+
+    def execute(self, data):
+        funcall = self.specification
+
+        if 'self' in inspect.getargspec(self.specification)[0]:
+            if not self.specification.im_self:
+                # TODO(didier) find a better solution for unbound methods
+                instance = self.specification.im_class()
+                funcall = lambda d: self.specification.__func__(instance, d)
+
+        return funcall(data)
+
+
 class SpecificationInstance:
     def __init__(self, specification, variables):
         self.specification = specification
@@ -17,16 +34,20 @@ class SpecificationInstance:
 
     def execute(self, data):
         parameters = {}
+        funcall = self.specification
 
         for name in inspect.getargspec(self.specification)[0]:
             if name == 'self':
-                pass
+                # TODO(didier) find a better solution for unbound methods
+                if not self.specification.im_self:
+                    parameters['self'] = self.specification.im_class()
+                    funcall = self.specification.__func__
             elif name == 'data':
                 parameters['data'] = data
             else:
                 parameters[name] = self.variables(name)
 
-        return self.specification(**parameters)
+        return funcall(**parameters)
 
 
 class SpecificationFilter:
@@ -46,7 +67,7 @@ class SpecificationFilter:
         spec = rest.specs(self.specification)
 
         if spec.hasProvider() and isinstance(response, spec.getProvider()):
-            return self.specification
+            return ProviderInstance(self.specification)
         else:
             return None
 

@@ -7,7 +7,7 @@
 
 import unittest
 from fluent_rest.spec.rest import *
-from fluent_rest.inspector.inspection import inspect
+from fluent_rest.inspector.inspection import inspector
 
 
 class TestCase(unittest.TestCase):
@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertEquals(inspect(test).handle(lambda f: f), [test])
+        self.assertEquals(inspector(test).handle(lambda f: f), [test])
 
     def test_should_inspect_class(self):
         class Test:
@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
             def test(self):
                 pass
 
-        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
 
     def test_should_inspect_instance(self):
         class Test:
@@ -52,7 +52,7 @@ class TestCase(unittest.TestCase):
 
         test = Test()
 
-        self.assertEquals(inspect(test).handle(lambda f: f), [test.test])
+        self.assertEquals(inspector(test).handle(lambda f: f), [test.test])
 
     def test_should_inspect_specified_class_extending_path(self):
         @Path('foo')
@@ -66,7 +66,7 @@ class TestCase(unittest.TestCase):
             def test(self):
                 pass
 
-        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
         self.assertEquals(specs(Test.test).getPath(), 'foo/bar')
 
     def test_should_inspect_specified_instance_extending_path(self):
@@ -83,7 +83,7 @@ class TestCase(unittest.TestCase):
 
         test = Test()
 
-        self.assertEquals(inspect(test).handle(lambda f: f), [test.test])
+        self.assertEquals(inspector(test).handle(lambda f: f), [test.test])
         self.assertEquals(specs(test.test).getPath(), 'foo/bar')
 
     def test_should_inspect_specified_class_adding_path(self):
@@ -97,7 +97,7 @@ class TestCase(unittest.TestCase):
             def test(self):
                 pass
 
-        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
         self.assertEquals(specs(Test.test).getPath(), 'foo')
 
     def test_should_inspect_specified_class_adding_consumes(self):
@@ -112,7 +112,7 @@ class TestCase(unittest.TestCase):
             def test(self):
                 pass
 
-        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
         self.assertTrue(specs(Test.test).hasGivenConsumes('application/json'))
 
     def test_should_inspect_specified_adding_produces(self):
@@ -126,7 +126,7 @@ class TestCase(unittest.TestCase):
             def test(self):
                 pass
 
-        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
         self.assertTrue(specs(Test.test).hasGivenProduces('application/json'))
 
     def test_should_inspect_specified_provider(self):
@@ -138,7 +138,7 @@ class TestCase(unittest.TestCase):
             def test(self):
                 pass
 
-        self.assertEquals(inspect(Test).handle(lambda f: f), [Test.test])
+        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
         self.assertTrue(specs(Test.test).hasProvider())
         self.assertEqual(specs(Test.test).getProvider(), Exception)
 
