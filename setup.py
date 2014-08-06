@@ -11,7 +11,7 @@ from setuptools import setup
 setup(
     name='fluent-rest',
     version='0.1',
-    packages=['fluent_rest', 'tests'],
+    packages=['fluent_rest'],
     url='https://github.com/d-plaindoux/fluent-rest',
     license='LGPL ',
     author='d-plaindoux',
