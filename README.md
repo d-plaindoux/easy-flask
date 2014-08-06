@@ -125,19 +125,33 @@ item = '{' IDENT (':' type) '}'
 type = 'int' | 'float' | 'string' | 'path' | 'uuid'
 ```
 
-`@Consumes(...)` and `@Produces(...)`
+`@Consumes(mime)` and `@Produces(mime)`
 -------------------------------------------------------------------------------
 
 Each request comes with its constraints related to input and output
 representation. This is commonly denoted using mime and each of it has it
 own transformation process.
 
-`@GET`, `@POST`, `@PUT`, `@DELETE` ...
+`@GET`, `@POST`, `@PUT`, `@DELETE` and `@Verb(verb)`
 -------------------------------------------------------------------------------
 
-`@Provider(...)`
+In the REST approach the method - or verb - is fundamental.  The primary HTTP
+verbs are POST, GET, PUT, and DELETE. These correspond respectively to
+create, read, update, and delete operations aka CRUD model.. There are a
+number of other verbs, too, but are utilized less frequently. For this
+category of verbs the specification is done using `@Verb(...)` decorator.
+
+`@Provider(Class)`
 -------------------------------------------------------------------------------
 
+A provider in different situations like:
+- exception mapping transforming an exception to a `WebException`
+- create a resource on demand
+
+`@Inject(Class)`
+-------------------------------------------------------------------------------
+
+TODO
 
 License
 ===============================================================================
