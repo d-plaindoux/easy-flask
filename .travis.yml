@@ -4,5 +4,4 @@ python:
 install:
     pip install pep8 --use-mirrors
 script:
-  - python setup.py build
   - python setup.py test
