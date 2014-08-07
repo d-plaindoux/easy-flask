@@ -125,6 +125,19 @@ item = '{' IDENT (':' type) '}'
 type = 'int' | 'float' | 'string' | 'path' | 'uuid'
 ```
 
+### Examples
+
+The path specficiation `/foo/{bar:string}/baz` matches path like
+`/foo/a-string/baz` binding  `bar` variable to `a-string` ; match does not
+succeed for path like  `/foo/a/string/baz` because `a/string` is a sub path.
+ For this purpose the path type has been proposed and can be used to bind a
+ sub path. Then the path specification `/foo/{bar:path}/baz` matches
+ `/foo/a/string/baz` binding `bar` to `a/string` sub path.
+
+### Extending path types
+
+TODO
+
 `@Consumes(mime)` and `@Produces(mime)`
 -------------------------------------------------------------------------------
 
