@@ -42,7 +42,7 @@ class WSGIBridge:
     def __applyUsingSpecification(self, wrapper):
         try:
             for s in self.__filters:
-                instance = s.filterSpecification(wrapper)
+                instance = s.filterRequest(wrapper)
                 if instance:
                     response = instance.execute(wrapper.data())
                     return self.response(response)

@@ -8,6 +8,14 @@
 from fluent_rest.spec.specification import Specification
 
 
+def returnParam(f):
+    def fun(e):
+        f(e)
+        return e
+
+    return fun
+
+
 def specs(function):
     return Specification.get(function)
 
@@ -17,27 +25,28 @@ def specsExists(function):
 
 
 def Path(path):
-    return Specification.getAndDefine(lambda s: s.Path(path))
+    return returnParam(lambda e: Specification.get(e).Path(path))
 
 
 def Verb(name):
-    return Specification.getAndDefine(lambda s: s.Verb(name))
+    return returnParam(lambda e: Specification.get(e).Verb(name))
 
 
 def Consumes(mime):
-    return Specification.getAndDefine(lambda s: s.Consumes(mime))
+    return returnParam(lambda e: Specification.get(e).Consumes(mime))
 
 
 def Produces(mime):
-    return Specification.getAndDefine(lambda s: s.Produces(mime))
+    return returnParam(lambda e: Specification.get(e).Produces(mime))
 
 
 def Provider(kind):
-    return Specification.getAndDefine(lambda s: s.Provider(kind))
+    return returnParam(lambda e: Specification.get(e).Provider(kind))
 
 
 def Inject(kind):
-    return Specification.getAndDefine(lambda s: s.Inject(kind))
+    return returnParam(lambda e: Specification.get(e).Inject(kind))
+
 
 PUT = Verb('PUT')
 POST = Verb('POST')

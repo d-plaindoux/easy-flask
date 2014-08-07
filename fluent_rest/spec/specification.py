@@ -296,28 +296,18 @@ class Specification:
     @staticmethod
     def exists(element):
         """
-        TODO
+        Check whether an element has an attached REST specification
         """
         return hasattr(element, 'rest_specification')
 
     @staticmethod
     def get(element):
         """
-        TODO
+        Method called when a specification must be retrieved. If no one exists
+        a fresh specification is generated and attached to the parametric
+        element
         """
         if not Specification.exists(element):
             # TODO(didier) Find a better solution for rest spec' injection
             element.rest_specification = Specification()
         return element.rest_specification
-
-    @staticmethod
-    def getAndDefine(continuation):
-        """
-        TODO
-        """
-
-        def decorate(function):
-            continuation(Specification.get(function))
-            return function
-
-        return decorate
