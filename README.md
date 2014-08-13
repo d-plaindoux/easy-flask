@@ -145,7 +145,7 @@ Each request comes with its constraints related to input and output
 representation. This is commonly denoted using mime and each of it has it
 own transformation process.
 
-`@GET`, `@POST`, `@PUT`, `@DELETE` and `@Verb(verb)`
+`@GET` `@POST` `@PUT` `@DELETE` and `@Verb(verb)`
 -------------------------------------------------------------------------------
 
 In the REST approach the method - or verb - is fundamental.  The primary HTTP
