@@ -4,5 +4,9 @@
 # under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
-from fluent_rest.spec import specification, path, rest
+
+from fluent_rest.spec import specification
+from fluent_rest.spec import path
+from fluent_rest.spec import rest
+from fluent_rest.spec import inspection
 

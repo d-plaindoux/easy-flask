@@ -9,6 +9,7 @@ from inspect import getmembers
 from inspect import isfunction
 from inspect import isclass
 from inspect import ismethod
+from abc import abstractmethod
 
 from fluent_rest.spec.rest import specs
 from fluent_rest.spec.rest import specsExists
@@ -24,10 +25,11 @@ class Inspector:
     def __init__(self, entries):
         self.entries = entries
 
+    @abstractmethod
     def inherits(self, function):
-        raise Exception("Not Implemented")
+        pass
 
-    def performClosure(self):
+    def transitiveClosure(self):
         """
         Method used to identify specified functions in a given instance.
         """
@@ -50,7 +52,7 @@ class ObjectInspector(Inspector):
         Inspector.__init__(self, ObjectInspector.__methods(element))
         self.container = element
         self.clazz = clazz
-        self.performClosure()
+        self.transitiveClosure()
 
     def inherits(self, function):
         """
@@ -73,7 +75,7 @@ class FunctionInspector(Inspector):
 
     def __init__(self, function):
         Inspector.__init__(self, [function])
-        self.performClosure()
+        self.transitiveClosure()
 
     def inherits(self, function):
         return function

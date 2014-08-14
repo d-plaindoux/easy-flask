@@ -18,11 +18,11 @@ class Specification:
     """
 
     def __init__(self):
-        self.__combined = None
+        self.__inherited = None
         self.__specs = {}
 
     def combine(self, specification):
-        self.__combined = specification
+        self.__inherited = specification
         return self
 
     def __str__(self):
@@ -116,7 +116,11 @@ class Specification:
         return (
             Specification.__PATH in self.__specs
             or
-            (self.__combined and self.__combined.hasPath())
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasPath()
+            )
         )
 
     def getPath(self):
@@ -125,8 +129,8 @@ class Specification:
         """
 
         def combinedPath():
-            if self.__combined and self.__combined.hasPath():
-                c = self.__combined.getPath()
+            if self.__inherited and self.__inherited.hasPath():
+                c = self.__inherited.getPath()
                 return lambda p: "%s/%s" % (c, p) if p else c
             else:
                 return lambda p: p
@@ -173,7 +177,15 @@ class Specification:
         """
         TODO
         """
-        return self.__has(Specification.__VERB, verb)
+        return (
+            self.__has(self.__VERB, verb)
+            or
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasGivenVerb(verb)
+            )
+        )
 
     # ------------------------------------------------------------------------
     # Consumes management
@@ -192,7 +204,11 @@ class Specification:
         return (
             Specification.__CONSUMES in self.__specs
             or
-            (self.__combined and self.__combined.hasConsumes(self))
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasConsumes(self)
+            )
         )
 
     def hasGivenConsumes(self, mime):
@@ -202,7 +218,11 @@ class Specification:
         return (
             self.__has(self.__CONSUMES, mime)
             or
-            (self.__combined and self.__combined.hasGivenConsumes(mime))
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasGivenConsumes(mime)
+            )
         )
 
     # ------------------------------------------------------------------------
@@ -222,7 +242,11 @@ class Specification:
         return (
             Specification.__PRODUCES in self.__specs
             or
-            (self.__combined and self.__combined.hasProduced())
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasProduced()
+            )
         )
 
     def hasGivenProduces(self, mime):
@@ -232,7 +256,11 @@ class Specification:
         return (
             self.__has(self.__PRODUCES, mime)
             or
-            (self.__combined and self.__combined.hasGivenProduces(mime))
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasGivenProduces(mime)
+            )
         )
 
     # ------------------------------------------------------------------------

@@ -7,7 +7,7 @@
 
 import unittest
 from fluent_rest.spec.rest import *
-from fluent_rest.inspector.inspection import inspector
+from fluent_rest.spec.inspection import inspector
 
 
 class TestCase(unittest.TestCase):

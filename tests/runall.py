@@ -15,7 +15,6 @@ import inspection_test
 import wsgi_test
 
 
-
 if __name__ == '__main__':
     suite = unittest.TestSuite()
     suite.addTest(path_parse_test.suite())

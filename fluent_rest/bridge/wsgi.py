@@ -4,11 +4,10 @@
 # under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
-import inspect
 
 from fluent_rest.runtime.filter import SpecificationFilter
 from fluent_rest.runtime.request import Request
-from fluent_rest.inspector.inspection import inspector
+from fluent_rest.spec.inspection import inspector
 from fluent_rest.runtime.response import WebException
 
 

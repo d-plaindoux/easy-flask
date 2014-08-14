@@ -36,7 +36,7 @@ class OverloadedPathException(Exception):
         super(OverloadedPathException, self).__init__(*args, **kwargs)
 
 
-class NotASuitableDefinitionException(object):
+class NotASuitableDefinitionException(Exception):
     def __init__(self, *args, **kwargs):
         super(NotASuitableDefinitionException, self).__init__(*args, **kwargs)
 
