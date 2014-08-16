@@ -36,8 +36,6 @@ class Specification:
     __PATH = u'rest@Path'
     __CONSUMES = u'rest@Consumes'
     __PRODUCES = u'rest@Produces'
-    __PROVIDER = u'rest@Provider'
-    __INJECT = u'rest@Inject'
 
     def __define(self, key, value, setup):
         """
@@ -262,60 +260,6 @@ class Specification:
                 self.__inherited.hasGivenProduces(mime)
             )
         )
-
-    # ------------------------------------------------------------------------
-    # Provider management
-    # ------------------------------------------------------------------------
-
-    def Provider(self, kind):
-        """
-        TODO
-        """
-        return self.__define(self.__PROVIDER,
-                             kind,
-                             self.__errorIfDefine(OverloadedProviderException))
-
-    def hasProvider(self):
-        """
-        TODO
-        """
-        return Specification.__PROVIDER in self.__specs
-
-    def getProvider(self):
-        """
-        TODO
-        """
-        if self.hasProvider():
-            return self.__specs[Specification.__PROVIDER]
-        else:
-            return None
-
-    # ------------------------------------------------------------------------
-    # Produces management
-    # ------------------------------------------------------------------------
-
-    def Inject(self, kind):
-        """
-        TODO
-        """
-        return self.__define(self.__INJECT,
-                             kind,
-                             self.__errorIfDefine(OverloadedInjectException))
-
-    def hasInject(self):
-        """
-        TODO
-        """
-        return Specification.__INJECT in self.__specs
-
-    def getInject(self):
-        """
-        TODO
-        """
-        if self.hasInject():
-            return self.__specs[Specification.__INJECT]
-        else:
-            return None
 
     # ------------------------------------------------------------------------
     # Static behaviors

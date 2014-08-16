@@ -10,7 +10,7 @@ import uuid
 from fluent_rest.bridge.wsgi import WSGIBridge
 from fluent_rest.runtime.request import Request
 from fluent_rest.runtime.response import WebException
-from fluent_rest.spec.rest import GET, Provider
+from fluent_rest.spec.rest import GET
 from fluent_rest.spec.rest import PUT
 from fluent_rest.spec.rest import POST
 from fluent_rest.spec.rest import DELETE
@@ -45,13 +45,6 @@ class Todo:
     def __init__(self):
         self.todo = {}
 
-    #PathConverter('uuid', 'todo')
-    def convert(self, id):
-        if id in self.todo:
-            return self.todo[id]
-        else:
-            return None
-
     @GET
     def list(self):
         return self.todo
@@ -62,7 +55,7 @@ class Todo:
         if id in self.todo:
             return self.todo[id]
         else:
-            raise TodoNotFound(id)
+            raise self.notFound(TodoNotFound(id))
 
     @POST
     def create(self, data):
@@ -77,7 +70,7 @@ class Todo:
             self.todo[id] = data
             return id
         else:
-            raise TodoNotFound(id)
+            raise self.notFound(TodoNotFound(id))
 
     @DELETE
     @Path("{id:uuid}")
@@ -86,9 +79,8 @@ class Todo:
             del self.todo[id]
             return id
         else:
-            raise TodoNotFound(id)
+            raise self.notFound(TodoNotFound(id))
 
-    @Provider(TodoNotFound)
     def notFound(self, e):
         raise WebException.notFound("todo %s not found" % e.id)
 

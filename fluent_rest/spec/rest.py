@@ -40,14 +40,6 @@ def Produces(mime):
     return returnParam(lambda e: Specification.get(e).Produces(mime))
 
 
-def Provider(kind):
-    return returnParam(lambda e: Specification.get(e).Provider(kind))
-
-
-def Inject(kind):
-    return returnParam(lambda e: Specification.get(e).Inject(kind))
-
-
 PUT = Verb('PUT')
 POST = Verb('POST')
 

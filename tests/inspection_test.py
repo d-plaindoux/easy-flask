@@ -129,19 +129,6 @@ class TestCase(unittest.TestCase):
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
         self.assertTrue(specs(Test.test).hasGivenProduces('application/json'))
 
-    def test_should_inspect_specified_provider(self):
-        class Test:
-            def __init__(self):
-                pass
-
-            @Provider(Exception)
-            def test(self):
-                pass
-
-        self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertTrue(specs(Test.test).hasProvider())
-        self.assertEqual(specs(Test.test).getProvider(), Exception)
-
 
 def suite():
     aSuite = unittest.TestSuite()
