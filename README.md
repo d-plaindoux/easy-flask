@@ -1,5 +1,9 @@
-fluent-rest [![Build Status](https://travis-ci.org/d-plaindoux/fluent-rest.svg?branch=master)](https://travis-ci.org/d-plaindoux/fluent-rest)
+fluent-rest
 ===============================================================================
+
+[![Build Status](https://travis-ci.org/d-plaindoux/fluent-rest.svg?branch=master)](https://travis-ci.org/d-plaindoux/fluent-rest)
+[![Coverage Status](https://coveralls.io/repos/d-plaindoux/fluent-rest/badge.svg?branch=master)](https://coveralls.io/r/d-plaindoux/fluent-rest?branch=master)
+[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 Fluent REST decorators (annotations) dedicated to Web framework like:
 * [Flask](http://flask.pocoo.org)
