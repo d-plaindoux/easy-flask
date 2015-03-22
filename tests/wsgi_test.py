@@ -1,4 +1,4 @@
-# Copyright (C)2014 D. Plaindoux.
+# Copyright (C)2015 D. Plaindoux.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as published by
@@ -229,9 +229,9 @@ class TestCaseWithClass(unittest.TestCase):
                                "application/json",
                                '{"a":12}')
 
-        id = self.bridge.trigger(request)
+        response = self.bridge.trigger(request)
 
-        request = Request.delete("/todo/%s" % id,
+        request = Request.delete("/todo/%s" % response,
                                  "application/json",
                                  "application/json")
 

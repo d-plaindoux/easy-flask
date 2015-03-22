@@ -1,4 +1,4 @@
-# Copyright (C)2014 D. Plaindoux.
+# Copyright (C)2015 D. Plaindoux.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as published by
@@ -14,7 +14,6 @@ class Provider:
     def __init__(self):
         pass
 
-    @abstractmethod
     def get(self, _):
         return None
 

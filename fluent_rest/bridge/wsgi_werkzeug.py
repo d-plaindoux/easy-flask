@@ -1,4 +1,4 @@
-# Copyright (C)2014 D. Plaindoux.
+# Copyright (C)2015 D. Plaindoux.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as published by
@@ -6,7 +6,7 @@
 # later version.
 
 from fluent_rest.bridge.wsgi import WSGIBridge
-from requests import Request
+from fluent_rest.runtime.request import Request
 
 
 class Werkzeug(WSGIBridge):
