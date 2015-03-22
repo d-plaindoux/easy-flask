@@ -6,7 +6,6 @@
 # later version.
 
 from fluent_rest.runtime.filter import SpecificationFilter
-from fluent_rest.runtime.request import Request
 from fluent_rest.spec.inspection import inspector
 from fluent_rest.runtime.response import WebException
 
@@ -72,24 +71,3 @@ class WSGIBridge:
     def bind(self, binder):
         binder(self.trigger)
 
-
-class Werkzeug(WSGIBridge):
-    def __init__(self):
-        WSGIBridge.__init__(self)
-
-    def request(self, input):
-        return Request(input.method,
-                       input.path,
-                       input.headers['CONTENT-TYPE'],
-                       input.headers['CONTENT-TYPE'], # TODO(didier) ???
-                       input.get_data())              # TODO(didier) ???
-
-    def response(self, response):
-        from werkzeug import wrappers
-
-        return wrappers.Response(response)
-
-    def failure(self, status, message=None):
-        from werkzeug import wrappers
-
-        return wrappers.BaseResponse(status=status, response=message)
