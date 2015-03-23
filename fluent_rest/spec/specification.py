@@ -287,6 +287,15 @@ class Specification:
             )
         )
 
+    def getProvider(self):
+        """
+        Retrieve the defined provider. If it does not exist it returns None
+        """
+        if self.hasProvider():
+            return self.__specs[Specification.__PROVIDER]
+        else:
+            return None
+
     def hasGivenProvider(self, type):
         """
         TODO
