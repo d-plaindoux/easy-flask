@@ -67,7 +67,7 @@ class TestCase(unittest.TestCase):
                 pass
 
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertEquals(specs(Test.test).getPath(), 'foo/bar')
+        self.assertEquals(specification(Test.test).getPath(), 'foo/bar')
 
     def test_should_inspect_specified_instance_extending_path(self):
         @Path('foo')
@@ -84,7 +84,7 @@ class TestCase(unittest.TestCase):
         test = Test()
 
         self.assertEquals(inspector(test).handle(lambda f: f), [test.test])
-        self.assertEquals(specs(test.test).getPath(), 'foo/bar')
+        self.assertEquals(specification(test.test).getPath(), 'foo/bar')
 
     def test_should_inspect_specified_class_adding_path(self):
         @Path('foo')
@@ -98,7 +98,7 @@ class TestCase(unittest.TestCase):
                 pass
 
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertEquals(specs(Test.test).getPath(), 'foo')
+        self.assertEquals(specification(Test.test).getPath(), 'foo')
 
     def test_should_inspect_specified_class_adding_consumes(self):
         @Path('foo')
@@ -113,7 +113,7 @@ class TestCase(unittest.TestCase):
                 pass
 
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertTrue(specs(Test.test).hasGivenConsumes('application/json'))
+        self.assertTrue(specification(Test.test).hasGivenConsumes('application/json'))
 
     def test_should_inspect_specified_adding_produces(self):
         @Path('foo')
@@ -127,7 +127,7 @@ class TestCase(unittest.TestCase):
                 pass
 
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertTrue(specs(Test.test).hasGivenProduces('application/json'))
+        self.assertTrue(specification(Test.test).hasGivenProduces('application/json'))
 
 
 def suite():

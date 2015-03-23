@@ -17,7 +17,6 @@ class WSGIBridge:
 
     def __init__(self):
         self.__filters = []
-        self.__providers = []
         pass
 
     def request(self, _):

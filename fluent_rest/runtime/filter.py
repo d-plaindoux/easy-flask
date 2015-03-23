@@ -72,7 +72,7 @@ class SpecificationFilter:
         Method called when a response must be managed transparently using
         providers
         """
-        spec = rest.specs(self.specification)
+        spec = rest.specification(self.specification)
 
         if spec.hasProvider() and isinstance(response, spec.getProvider()):
             return ProviderInstance(self.specification)
@@ -85,7 +85,7 @@ class SpecificationFilter:
         If the request respects the specification it returns a set of bound
         variables defined in the path. Otherwise it returns None.
         """
-        spec = rest.specs(self.specification)
+        spec = rest.specification(self.specification)
 
         if spec.hasGivenVerb(request.verb()) is False:
             return None
@@ -104,4 +104,4 @@ class SpecificationFilter:
             return None
 
     def __str__(self):
-        return str(rest.specs(self.specification))
+        return str(rest.specification(self.specification))

@@ -6,7 +6,6 @@
 # later version.
 
 from fluent_rest.exceptions import OverloadedPathException
-from fluent_rest.exceptions import OverloadedInjectException
 from fluent_rest.exceptions import OverloadedProviderException
 from fluent_rest.exceptions import OverloadedVerbException
 
@@ -36,6 +35,7 @@ class Specification:
     __PATH = u'rest@Path'
     __CONSUMES = u'rest@Consumes'
     __PRODUCES = u'rest@Produces'
+    __PROVIDER = u'rest@Provider'
 
     def __define(self, key, value, setup):
         """
@@ -158,13 +158,13 @@ class Specification:
 
     def hasVerb(self):
         """
-        TODO
+        Check if a verb already exists
         """
         return Specification.__VERB in self.__specs
 
     def getVerb(self):
         """
-        TODO
+        Retrieve the defined verb. If it does not exist it returns None
         """
         if self.hasVerb():
             return self.__specs[Specification.__VERB]
@@ -173,7 +173,7 @@ class Specification:
 
     def hasGivenVerb(self, verb):
         """
-        TODO
+        Check if a given verb already exists
         """
         return (
             self.__has(self.__VERB, verb)
@@ -258,6 +258,46 @@ class Specification:
                 not self.__inherited is None
                 and
                 self.__inherited.hasGivenProduces(mime)
+            )
+        )
+
+    # ------------------------------------------------------------------------
+    # Providers management
+    # ------------------------------------------------------------------------
+
+    def Provider(self, aType):
+        """
+        TODO
+        """
+        return self.__define(self.__PROVIDER,
+                             aType,
+                             self.__errorIfDefine(OverloadedProviderException))
+
+    def hasProvider(self):
+        """
+        TODO
+        """
+        return (
+            Specification.__PROVIDER in self.__specs
+            or
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasProvider()
+            )
+        )
+
+    def hasGivenProvider(self, type):
+        """
+        TODO
+        """
+        return (
+            self.__has(self.__PROVIDER, type)
+            or
+            (
+                not self.__inherited is None
+                and
+                self.__inherited.hasGivenProvider(type)
             )
         )
 

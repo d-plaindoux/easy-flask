@@ -11,8 +11,8 @@ from inspect import isclass
 from inspect import ismethod
 from abc import abstractmethod
 
-from fluent_rest.spec.rest import specs
-from fluent_rest.spec.rest import specsExists
+from fluent_rest.spec.rest import specification
+from fluent_rest.spec.rest import specificationExists
 from fluent_rest.exceptions import NotASuitableDefinitionException
 
 
@@ -33,14 +33,14 @@ class Inspector:
         """
         Method used to identify specified functions in a given instance.
         """
-        return [self.inherits(f) for f in self.entries if specsExists(f)]
+        return [self.inherits(f) for f in self.entries if specificationExists(f)]
 
     def handle(self, handler):
         """
         Method used to identify specified functions in a given instance.
         Each function identified is handled using the parametric handler
         """
-        return [handler(f) for f in self.entries if specsExists(f)]
+        return [handler(f) for f in self.entries if specificationExists(f)]
 
 
 class ObjectInspector(Inspector):
@@ -58,8 +58,8 @@ class ObjectInspector(Inspector):
         """
         Add class specification to the function specification if necessary
         """
-        if specsExists(self.clazz):
-            specs(function).combine(specs(self.clazz))
+        if specificationExists(self.clazz):
+            specification(function).combine(specification(self.clazz))
 
         return function
 

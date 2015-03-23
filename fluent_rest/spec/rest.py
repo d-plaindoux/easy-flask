@@ -16,11 +16,11 @@ def returnParam(f):
     return fun
 
 
-def specs(function):
+def specification(function):
     return Specification.get(function)
 
 
-def specsExists(function):
+def specificationExists(function):
     return Specification.exists(function)
 
 
@@ -38,6 +38,10 @@ def Consumes(mime):
 
 def Produces(mime):
     return returnParam(lambda e: Specification.get(e).Produces(mime))
+
+
+def Provider(aType):
+    return returnParam(lambda e: Specification.get(e).Provider(aType))
 
 
 PUT = Verb('PUT')

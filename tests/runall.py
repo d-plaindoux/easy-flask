@@ -8,6 +8,7 @@
 import unittest
 import path_parse_test
 import path_match_test
+import provider_test
 import verb_test
 import mime_test
 import inspection_test
@@ -20,6 +21,7 @@ if __name__ == '__main__':
     suite.addTest(path_match_test.suite())
     suite.addTest(verb_test.suite())
     suite.addTest(mime_test.suite())
+    suite.addTest(provider_test.suite())
     suite.addTest(inspection_test.suite())
     suite.addTest(wsgi_test.suite())
     unittest.TextTestRunner(verbosity=2).run(suite)

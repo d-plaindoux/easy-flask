@@ -22,35 +22,35 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specs(test).hasGivenVerb(u'GET'))
+        self.assertTrue(specification(test).hasGivenVerb(u'GET'))
 
     def test_should_have_PUT(self):
         @PUT
         def test():
             pass
 
-        self.assertTrue(specs(test).hasGivenVerb(u'PUT'))
+        self.assertTrue(specification(test).hasGivenVerb(u'PUT'))
 
     def test_should_have_POST(self):
         @POST
         def test():
             pass
 
-        self.assertTrue(specs(test).hasGivenVerb(u'POST'))
+        self.assertTrue(specification(test).hasGivenVerb(u'POST'))
 
     def test_should_have_DELETE(self):
         @DELETE
         def test():
             pass
 
-        self.assertTrue(specs(test).hasGivenVerb(u'DELETE'))
+        self.assertTrue(specification(test).hasGivenVerb(u'DELETE'))
 
     def test_should_have_a_Verb(self):
         @Verb(u'UPLOAD')
         def test():
             pass
 
-        self.assertTrue(specs(test).hasGivenVerb(u'UPLOAD'))
+        self.assertTrue(specification(test).hasGivenVerb(u'UPLOAD'))
 
     def test_should_not_have_GET_and_PUT(self):
         try:
@@ -69,7 +69,7 @@ class TestCase(unittest.TestCase):
             def __init__(self):
                 pass
 
-        self.assertTrue(specs(Test).hasGivenVerb(u'GET'))
+        self.assertTrue(specification(Test).hasGivenVerb(u'GET'))
 
 
 def suite():
