@@ -21,7 +21,8 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specification(test).hasGivenConsumes('application/json'))
+        self.assertTrue(
+            specification(test).hasGivenConsumes('application/json'))
 
     def test_should_have_two_consumes(self):
         @Consumes('application/json')
@@ -29,15 +30,18 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specification(test).hasGivenConsumes('application/json'))
-        self.assertTrue(specification(test).hasGivenConsumes('application/xml'))
+        self.assertTrue(
+            specification(test).hasGivenConsumes('application/json'))
+        self.assertTrue(
+            specification(test).hasGivenConsumes('application/xml'))
 
     def test_should_have_a_produces(self):
         @Produces('application/json')
         def test():
             pass
 
-        self.assertTrue(specification(test).hasGivenProduces('application/json'))
+        self.assertTrue(
+            specification(test).hasGivenProduces('application/json'))
 
     def test_should_have_two_produces(self):
         @Produces('application/json')
@@ -45,8 +49,30 @@ class TestCase(unittest.TestCase):
         def test():
             pass
 
-        self.assertTrue(specification(test).hasGivenProduces('application/json'))
-        self.assertTrue(specification(test).hasGivenProduces('application/xml'))
+        self.assertTrue(
+            specification(test).hasGivenProduces('application/json'))
+        self.assertTrue(
+            specification(test).hasGivenProduces('application/xml'))
+
+    def test_should_identity_producer(self):
+        @Produces('application/json', lambda e: e)
+        def test():
+            pass
+
+        self.assertTrue(
+            specification(test).hasGivenProduces('application/json'))
+        self.assertTrue(
+            specification(test).getGivenProduces('application/json')(True))
+
+    def test_should_not_identity_producer(self):
+        @Produces('application/json', lambda e: not e)
+        def test():
+            pass
+
+        self.assertTrue(
+            specification(test).hasGivenProduces('application/json'))
+        self.assertTrue(
+            specification(test).getGivenProduces('application/json')(False))
 
 
 def suite():

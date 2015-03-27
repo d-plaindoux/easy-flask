@@ -32,6 +32,15 @@ class TodoNotFound(Exception):
     def __init__(id):
         self.id = id
 
+def UUIDToString(uuid):
+    return str(uuid)
+
+
+def TodoToJson(dictionary):
+    result = {}
+    for key in dictionary.keys():
+        result[str(key)] = dictionary[key]
+    return dumps(result)
 
 @Path("/todo")
 @Consumes("application/json")
@@ -41,11 +50,13 @@ class Todo:
         self.__todo = {}
 
     @GET
+    @Produces("application/json", TodoToJson)
     def list(self):
         return self.__todo
 
     @GET
     @Path("{id:uuid}")
+    @Produces("application/json", UUIDToString)
     def get(self, id):
         if id in self.__todo:
             return self.__todo[id]
@@ -53,6 +64,7 @@ class Todo:
             raise TodoNotFound(id)
 
     @POST
+    @Produces("application/json", UUIDToString)
     def create(self, data):
         id = uuid.uuid1()
         self.__todo[id] = data
@@ -60,6 +72,7 @@ class Todo:
 
     @PUT
     @Path("{id:uuid}")
+    @Produces("application/json", UUIDToString)
     def modify(self, id, data):
         if id in self.__todo:
             self.__todo[id] = data
@@ -69,6 +82,7 @@ class Todo:
 
     @DELETE
     @Path("{id:uuid}")
+    @Produces("application/json", UUIDToString)
     def remove(self, id):
         if id in self.__todo:
             del self.__todo[id]
@@ -142,12 +156,14 @@ succeed for path like  `/foo/a/string/baz` because `a/string` is a sub path.
 
 TODO
 
-`@Consumes(mime)` and `@Produces(mime)`
+`@Consumes(mime,...)` and `@Produces(mime,...)`
 -------------------------------------------------------------------------------
 
 Each request comes with its constraints related to input and output
 representation. This is commonly denoted using mime and each of it has it
-own transformation process.
+own transformation process. A second parameter can be added specifying the
+transformation process to be applied when the result is send back to the
+client.
 
 `@GET` `@POST` `@PUT` `@DELETE` and `@Verb(verb)`
 -------------------------------------------------------------------------------

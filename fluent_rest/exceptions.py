@@ -31,6 +31,11 @@ class OverloadedProviderException(Exception):
         super(OverloadedProviderException, self).__init__(*args, **kwargs)
 
 
+class OverloadedProducerException(Exception):
+    def __init__(self, *args, **kwargs):
+        super(OverloadedProducerException, self).__init__(*args, **kwargs)
+
+
 class OverloadedPathException(Exception):
     def __init__(self, *args, **kwargs):
         super(OverloadedPathException, self).__init__(*args, **kwargs)

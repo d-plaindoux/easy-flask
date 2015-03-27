@@ -6,6 +6,7 @@
 # later version.
 
 from fluent_rest.exceptions import OverloadedPathException
+from fluent_rest.exceptions import OverloadedProducerException
 from fluent_rest.exceptions import OverloadedProviderException
 from fluent_rest.exceptions import OverloadedVerbException
 
@@ -189,10 +190,15 @@ class Specification:
     # Consumes management
     # ------------------------------------------------------------------------
 
-    def Consumes(self, mime):
+    def Consumes(self, mime, transducer=None):
         """
         TODO
         """
+        if transducer:
+            self.__define(self.__CONSUMES + "@" + mime,
+                          transducer,
+                          self.__stackValues)
+
         return self.__define(self.__CONSUMES, mime, self.__stackValues)
 
     def hasConsumes(self):
@@ -227,10 +233,15 @@ class Specification:
     # Produces management
     # ------------------------------------------------------------------------
 
-    def Produces(self, mime):
+    def Produces(self, mime, transducer=None):
         """
         TODO
         """
+        if transducer:
+            self.__define(self.__PRODUCES + "@" + mime,
+                          transducer,
+                          self.__errorIfDefine(OverloadedProducerException))
+
         return self.__define(self.__PRODUCES, mime, self.__stackValues)
 
     def hasProduces(self):
@@ -246,6 +257,15 @@ class Specification:
                 self.__inherited.hasProduced()
             )
         )
+
+    def getGivenProduces(self, mime):
+        if Specification.__PRODUCES + "@" + mime in self.__specs:
+            return self.__specs[Specification.__PRODUCES + "@" + mime]
+
+        if not self.__inherited is None:
+            return self.__inherited.getGivenProduces(mime)
+
+        return lambda e: e
 
     def hasGivenProduces(self, mime):
         """

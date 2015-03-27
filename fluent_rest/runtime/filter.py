@@ -103,5 +103,18 @@ class SpecificationFilter:
         else:
             return None
 
+    def filterResponse(self, request):
+        """
+        Method called when the filter must be performed using a given request.
+        If the request respects the specification it returns the function for
+        the response transformation
+        """
+        spec = rest.specification(self.specification)
+
+        if spec.hasGivenProduces(request.produces()) is False:
+            return None
+
+        return spec.getGivenProduces(request.produces())
+
     def __str__(self):
         return str(rest.specification(self.specification))

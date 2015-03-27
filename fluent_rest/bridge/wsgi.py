@@ -28,13 +28,15 @@ class WSGIBridge:
     def failure(self, status, message=None):
         raise NotImplemented()
 
-    def __applyUsingProvider(self, data):
+    def __applyUsingProvider(self, data, alt=None):
+        alternate = alt if alt else lambda e: self.failure(500, str(data))
+
         for s in self.__filters:
             instance = s.filterProvider(data)
             if instance:
                 return instance.execute(data)
 
-        return self.failure(500, str(data))
+        return alternate(data)
 
     def __applyUsingSpecification(self, wrapper):
         try:
@@ -42,7 +44,7 @@ class WSGIBridge:
                 instance = s.filterRequest(wrapper)
                 if instance:
                     response = instance.execute(wrapper.data())
-                    return self.response(response)
+                    return self.response(s.filterResponse(wrapper)(response))
         except WebException, e:
             return self.failure(e.status, e.message)
 

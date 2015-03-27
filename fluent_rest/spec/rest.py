@@ -32,12 +32,16 @@ def Verb(name):
     return returnParam(lambda e: Specification.get(e).Verb(name))
 
 
-def Consumes(mime):
-    return returnParam(lambda e: Specification.get(e).Consumes(mime))
+def Consumes(mime, transducer=None):
+    return returnParam(
+        lambda e: Specification.get(e).Consumes(mime, transducer)
+    )
 
 
-def Produces(mime):
-    return returnParam(lambda e: Specification.get(e).Produces(mime))
+def Produces(mime, transducer=None):
+    return returnParam(
+        lambda e: Specification.get(e).Produces(mime, transducer)
+    )
 
 
 def Provider(aType):
