@@ -5,11 +5,11 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-from fluent_rest.bridge.wsgi import WSGIBridge
+from fluent_rest.bridge.wsgibridge import WSGIBridge
 from fluent_rest.runtime.request import Request
 
 
-class Werkzeug(WSGIBridge):
+class WerkzeugBridge(WSGIBridge):
     def __init__(self):
         WSGIBridge.__init__(self)
 

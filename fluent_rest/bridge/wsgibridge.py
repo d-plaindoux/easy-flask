@@ -66,9 +66,6 @@ class WSGIBridge:
         self.__filters.extend(inspector(service).handle(SpecificationFilter))
         return self
 
-    def unregister(self, _):
-        return self
-
     def bind(self, binder):
         binder(self.trigger)
 

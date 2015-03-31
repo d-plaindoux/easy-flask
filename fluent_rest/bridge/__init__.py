@@ -5,5 +5,5 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-from wsgi_werkzeug import Werkzeug
+from werkzeugbridge import WerkzeugBridge
 

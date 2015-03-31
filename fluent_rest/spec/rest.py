@@ -48,6 +48,14 @@ def Provider(aType):
     return returnParam(lambda e: Specification.get(e).Provider(aType))
 
 
+def Inject(aType):
+    return returnParam(lambda e: e)
+
+
+#
+# Constants definition
+#
+
 PUT = Verb('PUT')
 POST = Verb('POST')
 

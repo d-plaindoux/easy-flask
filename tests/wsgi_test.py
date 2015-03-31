@@ -7,7 +7,7 @@
 
 import unittest
 import uuid
-from fluent_rest.bridge.wsgi import WSGIBridge
+from fluent_rest.bridge.wsgibridge import WSGIBridge
 from fluent_rest.runtime.request import Request
 from fluent_rest.runtime.response import WebException
 from fluent_rest.spec.rest import GET
