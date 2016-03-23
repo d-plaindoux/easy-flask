@@ -21,5 +21,3 @@ class WebException(Exception):
     def notAcceptable(message=None):
         return WebException(406,
                             "Not acceptable" if message is None else message)
-
-

@@ -5,8 +5,4 @@
 # the Free Software Foundation; either version 2, or (at your option) any
 # later version.
 
-from fluent_rest.spec import specification
-from fluent_rest.spec import path
-from fluent_rest.spec import rest
-from fluent_rest.spec import inspection
-
+from fluent_rest.spec.rest import *

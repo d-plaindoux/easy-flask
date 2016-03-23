@@ -6,4 +6,3 @@
 # later version.
 
 from werkzeugbridge import WerkzeugBridge
-

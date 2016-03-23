@@ -7,7 +7,6 @@
 
 from setuptools import setup
 
-
 setup(
     name='fluent-rest',
     version='0.1',

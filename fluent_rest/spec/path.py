@@ -134,6 +134,7 @@ class Path:
     def parse(path):
         return Path([Path.__parserItem(p) for p in path.split('/')])
 
+
 #
 # Define native sorts with corresponding converter.
 # Note: No converter stands for as-is string value

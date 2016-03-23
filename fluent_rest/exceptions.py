@@ -44,5 +44,3 @@ class OverloadedPathException(Exception):
 class NotASuitableDefinitionException(Exception):
     def __init__(self, *args, **kwargs):
         super(NotASuitableDefinitionException, self).__init__(*args, **kwargs)
-
-

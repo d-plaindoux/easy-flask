@@ -7,11 +7,13 @@
 
 from json import dumps
 from uuid import uuid1
+
 from fluent_rest.bridge.werkzeugbridge import WerkzeugBridge
 from fluent_rest.runtime.response import WebException
-from fluent_rest.spec.rest import *
+from fluent_rest.spec import *
 from werkzeug import serving
 from werkzeug import wrappers
+
 
 #
 # Transformation processes
@@ -90,7 +92,7 @@ class Todo:
 if __name__ == '__main__':
     bridge = WerkzeugBridge(). \
         register(notFound). \
-        register(Todo()). \
+        register(Todo). \
         bind(lambda a: serving.run_simple('localhost',
                                           4000,
                                           wrappers.Request.application(a)))

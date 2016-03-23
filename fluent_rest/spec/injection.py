@@ -6,7 +6,7 @@
 # later version.
 
 import inspect
-from abc import abstractmethod
+
 from fluent_rest.exceptions import NotASuitableDefinitionException
 
 

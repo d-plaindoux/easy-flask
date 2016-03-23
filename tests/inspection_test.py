@@ -113,7 +113,8 @@ class TestCase(unittest.TestCase):
                 pass
 
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertTrue(specification(Test.test).hasGivenConsumes('application/json'))
+        self.assertTrue(
+            specification(Test.test).hasGivenConsumes('application/json'))
 
     def test_should_inspect_specified_adding_produces(self):
         @Path('foo')
@@ -127,7 +128,8 @@ class TestCase(unittest.TestCase):
                 pass
 
         self.assertEquals(inspector(Test).handle(lambda f: f), [Test.test])
-        self.assertTrue(specification(Test.test).hasGivenProduces('application/json'))
+        self.assertTrue(
+            specification(Test.test).hasGivenProduces('application/json'))
 
 
 def suite():

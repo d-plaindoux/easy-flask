@@ -6,6 +6,7 @@
 # later version.
 
 import inspect
+
 from fluent_rest.spec import rest
 from fluent_rest.spec.path import Path
 

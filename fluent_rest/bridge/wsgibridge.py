@@ -68,4 +68,3 @@ class WSGIBridge:
 
     def bind(self, binder):
         binder(self.trigger)
-

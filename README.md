@@ -45,7 +45,7 @@ def TodoToJson(dictionary):
 @Path("/todo")
 @Consumes("application/json")
 @Produces("application/json")
-class Todo:
+class TodoApp:
     def __init__(self):
         self.__todo = {}
 
@@ -102,16 +102,13 @@ bridge.
 ```python
 from werkzeug import serving
 from werkzeug import wrappers
-from fluent_rest.bridge import Werkzeug
+from fluent_rest.bridge.werkzeugbridge import WerkzeugBridge
 
-bridge = Werkzeug()
-
-bridge.register(Todo())
-
-bridge.bind(
-    lambda a: serving.run_simple('localhost',
-                                 4000,
-                                 wrappers.Request.application(a))
+bridge = WerkzeugBridge(). \
+    register(TodoApp()).   \
+    bind(lambda a: serving.run_simple('localhost',
+                                      4000,
+                                      wrappers.Request.application(a))
 )
 ```
 
