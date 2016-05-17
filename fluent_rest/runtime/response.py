@@ -13,6 +13,33 @@ class WebException(Exception):
         self.message = message
 
     @staticmethod
+    def get(status):
+        switcher = {
+            400: WebException.badRequest,
+            401: WebException.unauthorized,
+            402: WebException.paymentRequired,
+            404: WebException.notFound,
+            406: WebException.notAcceptable
+        }
+
+        return switcher.get(status, lambda m: WebException(status, m))
+
+    @staticmethod
+    def badRequest(message=None):
+        return WebException(400,
+                            "Bad request" if message is None else message)
+
+    @staticmethod
+    def unauthorized(message=None):
+        return WebException(401,
+                            "Unauthorized" if message is None else message)
+
+    @staticmethod
+    def paymentRequired(message=None):
+        return WebException(402,
+                            "Payment Required" if message is None else message)
+
+    @staticmethod
     def notFound(message=None):
         return WebException(404,
                             "Not found" if message is None else message)

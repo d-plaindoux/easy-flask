@@ -21,8 +21,8 @@ from werkzeug import wrappers
 
 
 class TodoNotFound(Exception):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, identifier):
+        self.identifier = identifier
 
 
 def UUIDToString(uuid):
@@ -38,7 +38,7 @@ def TodoToJson(dictionary):
 
 @Provider(TodoNotFound)
 def notFound(e):
-    raise WebException.notFound("todo %s not found" % e.id)
+    raise WebException.notFound("todo %s not found" % e.identifier)
 
 
 @Path("/todo")

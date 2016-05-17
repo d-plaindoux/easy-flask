@@ -16,7 +16,7 @@ from fluent_rest.exceptions import VariableUndefinedException
 
 class Sort:
     """
-    TODO
+    Path simple data type definition
     """
     patterns = {}
     converts = {}
@@ -48,7 +48,8 @@ class Sort:
 
 class Var:
     """
-    TODO
+    Path variable definition with a related sort. Default one is string when
+    no sort is given.
     """
 
     def __init__(self, name, sort=None):
@@ -81,7 +82,7 @@ class Var:
 
 class Path:
     """
-    Path internal representation
+    Path internal representation based on constants and variables definitions.
     """
 
     def __init__(self, path):
@@ -120,9 +121,10 @@ class Path:
         return isinstance(other, Path) and self.path() == other.path()
 
     @staticmethod
-    def __parserItem(path):
-        ident = Sort.patterns['ident']
-        regexp = '^[{](?P<name>%s)(:(?P<sort>%s))?[}]$' % (ident, ident)
+    def __parser(path):
+        identifier = Sort.patterns['ident']
+        regexp = '^[{](?P<name>%s)(:(?P<sort>%s))?[}]$' % \
+                 (identifier, identifier)
 
         result = match(regexp, path)
         if result is None:
@@ -132,7 +134,7 @@ class Path:
 
     @staticmethod
     def parse(path):
-        return Path([Path.__parserItem(p) for p in path.split('/')])
+        return Path([Path.__parser(p) for p in path.split('/')])
 
 
 #

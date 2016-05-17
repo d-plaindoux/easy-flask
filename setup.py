@@ -15,7 +15,7 @@ setup(
     license='LGPL ',
     author='d-plaindoux',
     author_email='d.plaindoux@free.fr',
-    keywords='REST WSGI decorators JAX-RS',
+    keywords='REST WSGI decorators a la JAX-RS',
     description='decorators for seamless REST library specification',
     test_suite="tests"
 )
