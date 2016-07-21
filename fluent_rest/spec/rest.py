@@ -45,12 +45,9 @@ def Produces(mime, transducer=None):
 
 
 def Provider(aType):
-    return returnParam(lambda e: Specification.get(e).Provider(aType))
-
-
-def Inject(aType):
-    return returnParam(lambda e: e)
-
+    return returnParam(
+        lambda e: Specification.get(e).Provider(aType)
+    )
 
 #
 # Constants definition
