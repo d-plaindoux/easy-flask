@@ -1,24 +1,15 @@
-fluent-rest
-===============================================================================
+# fluent-rest
 
 [![Build Status](https://travis-ci.org/d-plaindoux/fluent-rest.svg?branch=master)](https://travis-ci.org/d-plaindoux/fluent-rest)
 [![Coverage Status](https://coveralls.io/repos/d-plaindoux/fluent-rest/badge.svg?branch=master)](https://coveralls.io/r/d-plaindoux/fluent-rest?branch=master)
-[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-Fluent REST decorators (annotations) dedicated to Web framework like:
-* [Flask](http://flask.pocoo.org)
-* [Django](http://www.django-rest-framework.org)
-* [Pecan](http://www.pecanpy.org) and
-* [Falcon](http://falconframework.org).
-
-Introduction
-===============================================================================
+# Introduction
 
 This library provides REST specification facilities dedicated to
 python web frameworks.
 
-`Todo` Example
-===============================================================================
+# `Todo` Example
 
 In this example we show how decorators can be used in order to specify a REST
 service dedicated to `Todo` data.
@@ -112,8 +103,7 @@ bridge = WerkzeugBridge(). \
 )
 ```
 
-Decorators
-===============================================================================
+# Decorators
 
 The fluent-rest library provides a set of decorators applied at the
 class or at the method level. Decorators at the class level define
@@ -121,8 +111,7 @@ specification which are general like the path and available encoders and
 decoders. At the method level verbs are required and additional path can
 also be specified completing the class level path.
 
-`@Path(path)`
--------------------------------------------------------------------------------
+## `@Path(path)`
 
 A path decorator defines the path associated to a given REST service. A path
 corresponds to an URI to which a resource respond. Such path can be a simple
@@ -153,8 +142,7 @@ succeed for path like  `/foo/a/string/baz` because `a/string` is a sub path.
 
 TODO
 
-`@Consumes(mime,...)` and `@Produces(mime,...)`
--------------------------------------------------------------------------------
+## `@Consumes(mime,...)` and `@Produces(mime,...)`
 
 Each request comes with its constraints related to input and output
 representation. This is commonly denoted using mime and each of it has it
@@ -162,29 +150,21 @@ own transformation process. A second parameter can be added specifying the
 transformation process to be applied when the result is send back to the
 client.
 
-`@GET` `@POST` `@PUT` `@DELETE` and `@Verb(verb)`
--------------------------------------------------------------------------------
+## `@GET` `@POST` `@PUT` `@DELETE` and `@Verb(verb)`
 
-In the REST approach the method - or verb - is fundamental.  The primary HTTP
+In the REST approach a method - or verb - is fundamental.  The primary HTTP
 verbs are POST, GET, PUT, and DELETE. These correspond respectively to
-create, read, update, and delete operations aka CRUD model.. There are a
-number of other verbs, too, but are utilized less frequently. For this
+create, read, update, and delete operations aka CRUD model. There are a
+number of other verbs, too, but less frequently used. For this last
 category of verbs the specification is done using `@Verb(...)` decorator.
 
-`@Provider(Class)`
--------------------------------------------------------------------------------
+## `@Provider(Class)`
 
-A provider in different situations like:
+A provider can be used in different situations like:
 - exception mapping transforming an exception to a `WebException`
-- create a resource on demand
+- result mapping transforming a data to another one for serialization purpose.
 
-`@Inject(Class)`
--------------------------------------------------------------------------------
-
-TODO
-
-License
-===============================================================================
+# License
 
 Copyright (C)2015 D. Plaindoux.
 
