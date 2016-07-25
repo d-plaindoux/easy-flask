@@ -1,4 +1,4 @@
-# Copyright (C)2015 D. Plaindoux.
+# Copyright (C)2016 D. Plaindoux.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as published by
@@ -53,7 +53,9 @@ class WSGIBridge:
     def trigger(self, request):
         wrapper = self.request(request)
         try:
-            return self.__applyUsingSpecification(wrapper)
+            return self.__applyUsingProvider(
+                self.__applyUsingSpecification(wrapper)
+            )
         except Exception, e:
             try:
                 return self.__applyUsingProvider(e)

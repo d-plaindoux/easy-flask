@@ -1,4 +1,4 @@
-# Copyright (C)2015 D. Plaindoux.
+# Copyright (C)2016 D. Plaindoux.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as published by
@@ -7,8 +7,6 @@
 
 import unittest
 import uuid
-
-import array
 
 from fluent_rest.bridge.wsgibridge import WSGIBridge
 from fluent_rest.runtime.request import Request
@@ -42,6 +40,11 @@ class TodoNotFound(Exception):
         self.id = id
 
 
+class Result:
+    def __init__(self, result):
+        self.result = result
+
+
 @Path("/todo")
 @Consumes("application/json")
 @Produces("application/json")
@@ -51,13 +54,13 @@ class Todo:
 
     @GET
     def list(self):
-        return self.todo
+        return Result(self.todo)
 
     @GET
     @Path("{id:uuid}")
     def get(self, id):
         if id in self.todo:
-            return self.todo[id]
+            return Result(self.todo[id])
         else:
             raise TodoNotFound(id)
 
@@ -65,14 +68,14 @@ class Todo:
     def create(self, data):
         id = uuid.uuid1()
         self.todo[id] = data
-        return id
+        return Result(id)
 
     @PUT
     @Path("{id:uuid}")
     def modify(self, id, data):
         if id in self.todo:
             self.todo[id] = data
-            return id
+            return Result(id)
         else:
             raise TodoNotFound(id)
 
@@ -81,13 +84,13 @@ class Todo:
     def remove(self, id):
         if id in self.todo:
             del self.todo[id]
-            return id
+            return Result(id)
         else:
             raise TodoNotFound(id)
 
-    @Provider(uuid.UUID)
-    def transcode(self, s):
-        raise WebException.notFound("Catch them all")
+    @Provider(Result)
+    def returns(self, r):
+        return r.result
 
     @Provider(TodoNotFound)
     def notFound(self, e):
