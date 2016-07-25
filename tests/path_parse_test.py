@@ -50,8 +50,11 @@ class TestCase(unittest.TestCase):
                           Path([Var('myid', 'path')]))
 
     def test_should_parse_a_complex_path(self):
-        self.assertEquals(Path.parse('file/{myid:string}/content'),
-                          Path(['file', Var('myid', 'string'), 'content']))
+        self.assertEquals(Path.parse('file/{myid:string}/content/{paragraph}'),
+                          Path(['file',
+                                Var('myid', 'string'),
+                                'content',
+                                Var('paragraph', 'string')]))
 
 
 def suite():
