@@ -20,7 +20,7 @@ from fluent_rest.response import WebException
 
 
 class TodoNotFound(Exception):
-    def __init__(id):
+    def __init__(self, id):
         self.id = id
 
 def UUIDToString(uuid):
